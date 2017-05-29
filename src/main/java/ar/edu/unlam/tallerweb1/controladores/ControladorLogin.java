@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
+import ar.edu.unlam.tallerweb1.servicios.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +28,9 @@ public class ControladorLogin {
 	
 	@Inject
 	private ServicioRegistro servicioRegistro;
+
+	@Inject
+	private LoginService loginService;
 	
 	@RequestMapping("/registro")
 	public ModelAndView registro(){
@@ -49,7 +54,7 @@ public class ControladorLogin {
 		}
 		
 		if(user.getPassword().length() < 6){
-			errores.add("La contraseña debe tener al menos 6 caracteres.");
+			errores.add("La contraseï¿½a debe tener al menos 6 caracteres.");
 		}
 		
 		if(errores.size() == 0){
@@ -66,8 +71,43 @@ public class ControladorLogin {
 		model.put("errores", errores);
 		return new ModelAndView("registro", model);
 	}
-	
+
 	@RequestMapping("/login")
+	public ModelAndView irALogin(){
+		ModelMap model = new ModelMap();
+		User user = new User();
+		model.put("user", user);
+		return new ModelAndView("login", model);
+	}
+
+	@RequestMapping(path = "/login", method = RequestMethod.POST)
+	public ModelAndView validarLogin(@ModelAttribute("user") User user){
+		ModelMap model = new ModelMap();
+		List<String> errores = new ArrayList<>();
+
+		if(user.getEmail().length() < 6){
+			errores.add("El email debe tener al menos 6 caracteres");
+		}
+		if(user.getPassword().length() < 6){
+			errores.add("La contraseÃ±a debe tener al menos 6 caracteres");
+		}
+
+		if(errores.size() == 0){
+			try{
+				if(loginService.consultarUsuario(user) != null){
+					System.out.print("ENTRE!");
+					return new ModelAndView("redirect:/home");
+				}
+			}
+			catch(UserNotFoundException e){
+				errores.add("Datos incorrectos");
+			}
+		}
+		model.put("errores", errores);
+		return  new ModelAndView("login", model);
+	}
+	
+	/*@RequestMapping("/login")
 	public ModelAndView irALogin() {
 
 		ModelMap modelo = new ModelMap();
@@ -91,7 +131,7 @@ public class ControladorLogin {
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome() {
 		return new ModelAndView("home");
-	}
+	}*/
 	
 	/*@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
