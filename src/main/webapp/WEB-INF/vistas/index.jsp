@@ -9,11 +9,13 @@
 <jsp:include page="_Links.jsp" />
 </head>
 <body>
-	 <jsp:include page="_Header.jsp" />
-	  
-	  <div class="container">
+	<jsp:include page="_Header.jsp" />
+
+	  <div class="container" id ="container">
 	  	<h5>hola!</h5>
 	  	<h4>que tal</h4>
 	  </div>
+
+	<jsp:include page="_Footer.jsp" />
 </body>
 </html>

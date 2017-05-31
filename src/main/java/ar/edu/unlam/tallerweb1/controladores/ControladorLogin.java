@@ -16,16 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.exceptions.UserAlreadyExistsException;
 import ar.edu.unlam.tallerweb1.modelo.User;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.servicios.ServicioRegistro;
 
 @Controller
 public class ControladorLogin {
 
-	@Inject
-	private ServicioLogin servicioLogin;
-	
 	@Inject
 	private ServicioRegistro servicioRegistro;
 
@@ -95,8 +90,7 @@ public class ControladorLogin {
 		if(errores.size() == 0){
 			try{
 				if(loginService.consultarUsuario(user) != null){
-					System.out.print("ENTRE!");
-					return new ModelAndView("redirect:/home");
+					return new ModelAndView("redirect:/index");
 				}
 			}
 			catch(UserNotFoundException e){
@@ -106,39 +100,15 @@ public class ControladorLogin {
 		model.put("errores", errores);
 		return  new ModelAndView("login", model);
 	}
-	
-	/*@RequestMapping("/login")
-	public ModelAndView irALogin() {
 
-		ModelMap modelo = new ModelMap();
-		Usuario usuario = new Usuario();
-		modelo.put("usuario", usuario);
-		return new ModelAndView("login", modelo);
-	}
-
-	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario) {
-		ModelMap model = new ModelMap();
-
-		if (servicioLogin.consultarUsuario(usuario) != null) {
-			return new ModelAndView("redirect:/home");
-		} else {
-			model.put("error", "Usuario o clave incorrecta");
-		}
-		return new ModelAndView("login", model);
-	}
-	
-	@RequestMapping(path = "/home", method = RequestMethod.GET)
-	public ModelAndView irAHome() {
-		return new ModelAndView("home");
-	}*/
-	
-	/*@RequestMapping(path = "/", method = RequestMethod.GET)
-	public ModelAndView inicio() {
-		return new ModelAndView("redirect:/login");
-	}*/
-	@RequestMapping(path = "/", method = RequestMethod.GET)
+	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public ModelAndView index(){
 		return new ModelAndView("index");
 	}
+
+	@RequestMapping(path = "/", method = RequestMethod.GET)
+	public ModelAndView home(){
+		return new ModelAndView("redirect:/index");
+	}
+
 }

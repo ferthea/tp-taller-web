@@ -7,7 +7,7 @@ import ar.edu.unlam.tallerweb1.modelo.User;
 
 public interface UserDao {
 	
-	public List<User> getUsers();
-	public void registrarUsuario(User usuario);
-	public User consultarUsuario(User user) throws UserNotFoundException;
+	List<User> getUsers();
+	void registrarUsuario(User usuario);
+	User consultarUsuario(User user) throws UserNotFoundException;
 }
