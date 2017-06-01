@@ -7,4 +7,5 @@ import java.util.List;
 public interface RestaurantDao {
     List<Restaurant> obtenerRestaurants();
     void agregarRestaurant(Restaurant restaurant);
+    Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception;
 }

@@ -6,7 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
+import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import ar.edu.unlam.tallerweb1.servicios.LoginService;
+import ar.edu.unlam.tallerweb1.servicios.RestaurantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +28,9 @@ public class ControladorLogin {
 
 	@Inject
 	private LoginService loginService;
+
+	@Inject
+	private RestaurantService restaurantService;
 	
 	@RequestMapping("/registro")
 	public ModelAndView registro(){
@@ -103,7 +108,10 @@ public class ControladorLogin {
 
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public ModelAndView index(){
-		return new ModelAndView("index");
+		ModelMap model = new ModelMap();
+		List<Restaurant> restaurantes = restaurantService.obtenerListaDeRestaurants();
+		model.put("restaurants", restaurantes);
+		return new ModelAndView("index", model);
 	}
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)

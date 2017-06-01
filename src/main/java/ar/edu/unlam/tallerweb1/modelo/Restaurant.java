@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.modelo;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
@@ -16,13 +17,14 @@ public class Restaurant {
     private List<Menu> listaDeMenues;
 
     public Restaurant(){
-
+        this.listaDeMenues = new ArrayList<>();
     }
 
     public Restaurant(String nombre, String direccion, Integer cantidadDeClientes){
         this.nombre = nombre;
         this.direccion = direccion;
         this.maximaCantidadDeClientes = cantidadDeClientes;
+        this.listaDeMenues = new ArrayList<>();
     }
 
     public Long getId() {

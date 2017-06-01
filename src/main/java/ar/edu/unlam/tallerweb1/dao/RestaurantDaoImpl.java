@@ -5,6 +5,7 @@ import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("restaurantDao")
@@ -14,6 +15,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 
     @PostConstruct
     public void generarRestaurants(){
+        listaDeRestaurants = new ArrayList<>();
         Restaurant primerRestaurant = new Restaurant("Parrilla marcelo", "Rivadavia 3285", 45);
         Restaurant segundoRestaurant = new Restaurant("Pizzeria megapizzas", "Saavedra 912", 30);
         primerRestaurant.agregarMenu(new Menu("Parrillada completa", 425.00, "Descripcion del menu..."));
@@ -34,5 +36,15 @@ public class RestaurantDaoImpl implements RestaurantDao {
     @Override
     public void agregarRestaurant(Restaurant restaurant) {
         this.listaDeRestaurants.add(restaurant);
+    }
+
+    @Override
+    public Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception{
+        for(Restaurant restaurant : listaDeRestaurants){
+            if(restaurant.getNombre().equals(nombre)){
+                return restaurant;
+            }
+        }
+        throw new Exception("Restaurant not found");
     }
 }
