@@ -17,7 +17,7 @@ public class RestaurantController {
     @Inject
     private RestaurantService restaurantService;
 
-    @RequestMapping(value = "/restaurants/${nombreDelRestaurant}", method = RequestMethod.GET)
+    @RequestMapping(value = "/restaurants/{nombreDelRestaurant}", method = RequestMethod.GET)
     public ModelAndView getRestaurant(@PathVariable("nombreDelRestaurant") String nombre){
         //en la vista muestro en enlace reemplazando los espacios por '_', aca los vuelvo a transformar en espacios
         nombre = nombre.replace("_", " ");

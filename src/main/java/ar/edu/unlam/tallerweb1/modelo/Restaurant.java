@@ -1,28 +1,29 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    private String tipo;
     private String direccion;
     private Integer maximaCantidadDeClientes;
+    @ElementCollection(targetClass = Menu.class)
     private List<Menu> listaDeMenues;
 
     public Restaurant(){
-        this.listaDeMenues = new ArrayList<>();
     }
 
-    public Restaurant(String nombre, String direccion, Integer cantidadDeClientes){
+    public Restaurant(String nombre, String tipo, String direccion, Integer cantidadDeClientes){
         this.nombre = nombre;
         this.direccion = direccion;
+        this.tipo = tipo;
         this.maximaCantidadDeClientes = cantidadDeClientes;
         this.listaDeMenues = new ArrayList<>();
     }
@@ -41,6 +42,14 @@ public class Restaurant {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getTipo(){
+        return tipo;
+    }
+
+    public void setTipo(String tipo){
+        this.tipo = tipo;
     }
 
     public String getDireccion() {

@@ -1,9 +1,9 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
+@Entity
 public class Menu {
 
     @Id
@@ -12,15 +12,17 @@ public class Menu {
     private String nombre;
     private Double precio;
     private String descripcion;
+    @ElementCollection
+    private List<String> ingredientes;
 
     public Menu(){
-
     }
 
-    public Menu(String nombre, Double precio, String descripcion){
+    public Menu(String nombre, Double precio, String descripcion, List<String> ingredientes){
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
+        this.ingredientes = ingredientes;
     }
 
     public Long getId() {
@@ -53,6 +55,14 @@ public class Menu {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<String> getIngredientes(){
+        return this.ingredientes;
+    }
+
+    public void setIngredientes(List<String> ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
     @Override

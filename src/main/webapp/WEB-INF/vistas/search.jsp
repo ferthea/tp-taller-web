@@ -12,22 +12,11 @@
 <jsp:include page="_Header.jsp" />
 
 <div class="container" id ="container">
-  <c:if test="${not empty error}">
-    <h5>${error}</h5>
-  </c:if>
-  <c:if test="${not empty restaurant}">
-    <div class="row">
-      <div class="col s12 m10 offset-m1">
-        <h5 class="center-align">
-          ${restaurant.getNombre()}
-          <a class="btn-floating btn-large light-green lighten-1 right pulse" href="/reservar">
-            <i class="large material-icons">mode_edit</i>
-          </a>
-        </h5>
-
-      </div>
+  <div class="row">
+    <div class="col s12 m8 offset-m2">
+      <h5 class="center-align">Resultados de la búsqueda</h5>
     </div>
-  </c:if>
+  </div>
 </div>
 
 <jsp:include page="_Footer.jsp" />

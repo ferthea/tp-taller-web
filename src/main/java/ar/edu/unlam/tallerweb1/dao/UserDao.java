@@ -10,5 +10,4 @@ public interface UserDao {
 	List<User> getUsers();
 	void registrarUsuario(User usuario);
 	User consultarUsuario(User user) throws UserNotFoundException;
-	User consultarUnUsuario(User user);
 }

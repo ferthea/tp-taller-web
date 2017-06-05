@@ -12,15 +12,24 @@
 	<jsp:include page="_Header.jsp" />
 
 	  <div class="container" id ="container">
-		  <h5>hola!</h5>
+		  <div class="row">
+			  <div class="col s12 m11 offset-m1">
+				  <form action="search" method="get">
+					  <div class="input-field">
+						  <input id="search" type="search" name="q" required placeholder="Ingresa el nombre de un restaurant o un plato que quisieras comer">
+						  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+						  <i class="material-icons">close</i>
+					  </div>
+				  </form>
+			  </div>
+		  </div>
 		  <div class="row">
 			  <c:forEach items="${restaurants}" var="restaurant">
 				  <div class="col s12 m5 offset-m1">
 					  <div class="card">
 						  <div class="card-image">
-							  <img src="images/restaurant.jpg">
-							  <span class="card-title">${restaurant.getNombre()}</span>
-							  <a class="btn-floating halfway-fab waves-effect waves-light light-green darken-1" href="/restaurants/${restaurant.getNombre().replaceAll(" ", "_")}"><i class="material-icons">send</i></a>
+							  <a href="/restaurants/${restaurant.getNombre().replaceAll(" ", "_")}"}><img src="images/restaurant.jpg">
+							  <span class="card-title">${restaurant.getNombre()}</span></a>
 						  </div>
 						  <div class="card-content">
 							  <p><i class="material-icons">location_on</i> ${restaurant.getDireccion()}</p>
