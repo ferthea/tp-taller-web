@@ -25,6 +25,6 @@ public class ServicioRegistroImpl implements ServicioRegistro{
 				throw new UserAlreadyExistsException("El usuario ya existe");
 			}
 		}
-		listaDeUsuarios.add(user);
+		servicioRegistroDao.registrarUsuario(user);
 	}
 }

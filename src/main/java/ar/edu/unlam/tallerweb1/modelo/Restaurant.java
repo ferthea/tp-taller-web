@@ -14,7 +14,7 @@ public class Restaurant {
     private String tipo;
     private String direccion;
     private Integer maximaCantidadDeClientes;
-    @ElementCollection(targetClass = Menu.class)
+    @OneToMany
     private List<Menu> listaDeMenues;
 
     public Restaurant(){

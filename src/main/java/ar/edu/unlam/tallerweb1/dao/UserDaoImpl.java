@@ -19,33 +19,19 @@ public class UserDaoImpl implements UserDao {
 	@Inject
 	private SessionFactory sessionFactory;
 
-	Session session;
-	
 	public List<User> getUsers(){
-		try {
-			session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-			session = sessionFactory.openSession();
-		}
+		Session session = generateSession();
 		List<User> listaDeUsuarios = session.createCriteria(User.class).list();
 		return listaDeUsuarios;
 	}
 	
 	public void registrarUsuario(User usuario){
-		try {
-			session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-			session = sessionFactory.openSession();
-		}
+		Session session = generateSession();
 		session.save(usuario);
 	}
 
 	public User consultarUsuario(User user) throws UserNotFoundException{
-		try {
-			session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-			session = sessionFactory.openSession();
-		}
+		Session session = generateSession();
 		User usuario = (User) session.createCriteria(User.class)
 				.add(Restrictions.eq("email", user.getEmail()))
 				.add(Restrictions.eq("password", user.getPassword()))
@@ -58,14 +44,20 @@ public class UserDaoImpl implements UserDao {
 
 	//BDD
 	public User consultarUnUsuario(User usuario){
-		try {
-			session = sessionFactory.getCurrentSession();
-		} catch (HibernateException e) {
-			session = sessionFactory.openSession();
-		}
+		Session session = generateSession();
 		return (User) session.createCriteria(User.class)
 				.add(Restrictions.eq("email", usuario.getEmail()))
 				.add(Restrictions.eq("password", usuario.getPassword()))
 				.uniqueResult();
+	}
+
+	private Session generateSession(){
+		Session session;
+		try{
+			session = sessionFactory.getCurrentSession();
+		} catch(HibernateException exception){
+			session = sessionFactory.openSession();
+		}
+		return session;
 	}
 }
