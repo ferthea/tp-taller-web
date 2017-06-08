@@ -63,6 +63,19 @@ public class RestaurantDaoImpl implements RestaurantDao {
         throw new Exception("Restaurant not found");
     }
 
+    public List<Restaurant> obtenerListaDeRestaurantsPorNombre(String nombre) throws Exception{
+        List<Restaurant> list = new ArrayList<>();
+        for(Restaurant restaurant : listaDeRestaurants){
+            if(restaurant.getNombre().toLowerCase().contains(nombre.toLowerCase())){
+                if(!list.contains(restaurant)){
+                    list.add(restaurant);
+                }
+            }
+        }
+        if(list.size() == 0) throw new Exception("No se han encontrado resultados");
+        return list;
+    }
+
     private Session generateSession(){
         Session session;
         try{

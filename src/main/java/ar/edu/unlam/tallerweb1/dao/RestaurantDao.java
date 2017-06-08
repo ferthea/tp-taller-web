@@ -8,4 +8,5 @@ public interface RestaurantDao {
     List<Restaurant> obtenerRestaurants();
     void agregarRestaurant(Restaurant restaurant);
     Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception;
+    List<Restaurant> obtenerListaDeRestaurantsPorNombre(String nombre) throws Exception;
 }

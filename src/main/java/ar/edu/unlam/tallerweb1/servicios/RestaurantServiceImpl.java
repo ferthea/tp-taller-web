@@ -26,4 +26,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception{
         return restaurantDao.obtenerRestaurantPorNombre(nombre);
     }
+
+    public List<Restaurant> obtenerListaDeRestaurantsPorNombre(String nombre) throws Exception{
+        return restaurantDao.obtenerListaDeRestaurantsPorNombre(nombre);
+    }
 }

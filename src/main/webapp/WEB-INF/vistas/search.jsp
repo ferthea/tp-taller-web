@@ -13,8 +13,30 @@
 
 <div class="container" id ="container">
   <div class="row">
-    <div class="col s12 m8 offset-m2">
-      <h5 class="center-align">Resultados de la búsqueda</h5>
+    <div class="col s12 m10 offset-m1">
+      <div class="row">
+        <c:if test="${error != null}">
+          <h5 class="center-align">No se han encontrado resultados.</h5>
+        </c:if>
+        <c:if test="${error == null}">
+          <h5 class="center-align">Resultados de la búsqueda</h5>
+        </c:if>
+      </div>
+      <div class="row">
+        <c:forEach items="${restaurants}" var="restaurant">
+          <div class="col s12 m5 offset-m1">
+            <div class="card">
+              <div class="card-image">
+                <a href="/restaurants/${restaurant.getNombre().replaceAll(" ", "_")}"}><img src="images/restaurant.jpg">
+                  <span class="card-title">${restaurant.getNombre()}</span></a>
+              </div>
+              <div class="card-content">
+                <p><i class="material-icons">location_on</i> ${restaurant.getDireccion()}</p>
+              </div>
+            </div>
+          </div>
+        </c:forEach>
+      </div>
     </div>
   </div>
 </div>

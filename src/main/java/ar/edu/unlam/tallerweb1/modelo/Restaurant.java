@@ -89,4 +89,20 @@ public class Restaurant {
         menu.setNombre(nombre);
         this.listaDeMenues.remove(menu);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Restaurant that = (Restaurant) o;
+
+        return !(nombre != null ? !nombre.equals(that.nombre) : that.nombre != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return nombre != null ? nombre.hashCode() : 0;
+    }
 }
