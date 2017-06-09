@@ -20,44 +20,26 @@ public class UserDaoImpl implements UserDao {
 	private SessionFactory sessionFactory;
 
 	public List<User> getUsers(){
-		Session session = generateSession();
+		Session session = sessionFactory.openSession();
 		List<User> listaDeUsuarios = session.createCriteria(User.class).list();
 		return listaDeUsuarios;
 	}
 	
 	public void registrarUsuario(User usuario){
-		Session session = generateSession();
+		Session session = sessionFactory.openSession();
 		session.save(usuario);
 	}
 
 	public User consultarUsuario(User user) throws UserNotFoundException{
-		Session session = generateSession();
+		Session session = sessionFactory.openSession();
 		User usuario = (User) session.createCriteria(User.class)
 				.add(Restrictions.eq("email", user.getEmail()))
 				.add(Restrictions.eq("password", user.getPassword()))
 				.uniqueResult();
-		if(usuario != null){
-			return usuario;
-		}
-		throw new UserNotFoundException("No se ha encontrado un usuario con los datos ingresados");
-	}
 
-	//BDD
-	public User consultarUnUsuario(User usuario){
-		Session session = generateSession();
-		return (User) session.createCriteria(User.class)
-				.add(Restrictions.eq("email", usuario.getEmail()))
-				.add(Restrictions.eq("password", usuario.getPassword()))
-				.uniqueResult();
-	}
-
-	private Session generateSession(){
-		Session session;
-		try{
-			session = sessionFactory.getCurrentSession();
-		} catch(HibernateException exception){
-			session = sessionFactory.openSession();
+		if(usuario == null){
+			throw new UserNotFoundException("No se ha encontrado un usuario con los datos ingresados");
 		}
-		return session;
+		return usuario;
 	}
 }

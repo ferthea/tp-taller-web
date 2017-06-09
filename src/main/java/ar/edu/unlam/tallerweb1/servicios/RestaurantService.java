@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface RestaurantService {
     List<Restaurant> obtenerListaDeRestaurants();
-    List<Restaurant> obtenerListaDeRestaurantsPorNombre(String nombre) throws Exception;
+    List<Restaurant> obtenerListaDeRestaurantsPorNombre(String nombre);
+    Restaurant obtenerRestaurantPorId(Integer id) throws Exception;
     Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception;
     void agregarNuevoRestaurant(Restaurant restaurant);
+    void cargarMenues();
 }

@@ -21,12 +21,12 @@ public class SearchController {
     @RequestMapping(path = "/search", method = RequestMethod.GET)
     public ModelAndView search(@RequestParam(value = "q", required = true) String query){
         ModelMap model = new ModelMap();
-        try{
-            List<Restaurant> listaDeRestaurants = restaurantService.obtenerListaDeRestaurantsPorNombre(query);
-            model.put("restaurants", listaDeRestaurants);
-            System.out.println("Restaurants: " + listaDeRestaurants.size());
-        }catch(Exception e){
+        List<Restaurant> listaDeRestaurants = restaurantService.obtenerListaDeRestaurantsPorNombre(query);
+        System.out.println("RESULTADO: " + listaDeRestaurants.size());
+        if(listaDeRestaurants.size() == 0){
             model.put("error", "No se han encontrado resultados.");
+        }else{
+            model.put("restaurants", listaDeRestaurants);
         }
 
         return new ModelAndView("search", model);

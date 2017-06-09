@@ -17,15 +17,12 @@ public class RestaurantController {
     @Inject
     private RestaurantService restaurantService;
 
-    @RequestMapping(value = "/restaurants/{nombreDelRestaurant}", method = RequestMethod.GET)
-    public ModelAndView getRestaurant(@PathVariable("nombreDelRestaurant") String nombre){
-        //en la vista muestro en enlace reemplazando los espacios por '_', aca los vuelvo a transformar en espacios
-        nombre = nombre.replace("_", " ");
-
+    @RequestMapping(value = "/restaurants/{idRestaurant}", method = RequestMethod.GET)
+    public ModelAndView getRestaurant(@PathVariable("idRestaurant") Integer id){
         ModelMap model = new ModelMap();
 
         try{
-            Restaurant restaurant = restaurantService.obtenerRestaurantPorNombre(nombre);
+            Restaurant restaurant = restaurantService.obtenerRestaurantPorId(id);
             model.put("restaurant", restaurant);
         }catch(Exception e){
             model.put("error", "No se ha encontrado el restaurant solicitado");

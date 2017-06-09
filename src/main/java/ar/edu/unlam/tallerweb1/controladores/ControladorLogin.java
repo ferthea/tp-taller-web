@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.swing.text.View;
 
 import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
@@ -31,7 +32,7 @@ public class ControladorLogin {
 
 	@Inject
 	private RestaurantService restaurantService;
-	
+
 	@RequestMapping("/registro")
 	public ModelAndView registro(){
 		ModelMap model = new ModelMap();
@@ -112,6 +113,13 @@ public class ControladorLogin {
 		List<Restaurant> restaurantes = restaurantService.obtenerListaDeRestaurants();
 		model.put("restaurants", restaurantes);
 		return new ModelAndView("index", model);
+	}
+
+	@RequestMapping(path = "/cargardatos", method = RequestMethod.GET)
+	public ModelAndView cargar(){
+		restaurantService.cargarMenues();
+
+		return new ModelAndView("index");
 	}
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)

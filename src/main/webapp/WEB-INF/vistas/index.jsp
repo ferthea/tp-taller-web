@@ -28,7 +28,7 @@
 				  <div class="col s12 m5 offset-m1">
 					  <div class="card">
 						  <div class="card-image">
-							  <a href="/restaurants/${restaurant.getNombre().replaceAll(" ", "_")}"}><img src="images/restaurant.jpg">
+							  <a href="/restaurants/${restaurant.getId()}"}><img src="images/restaurant.jpg">
 							  <span class="card-title">${restaurant.getNombre()}</span></a>
 						  </div>
 						  <div class="card-content">

@@ -1,6 +1,10 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +18,7 @@ public class Restaurant {
     private String tipo;
     private String direccion;
     private Integer maximaCantidadDeClientes;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Menu> listaDeMenues;
 
     public Restaurant(){
@@ -78,16 +82,6 @@ public class Restaurant {
 
     public void agregarMenu(Menu menu){
         this.listaDeMenues.add(menu);
-    }
-
-    public void quitarMenu(Menu menu){
-        this.listaDeMenues.remove(menu);
-    }
-
-    public void quitarMenuPorNombre(String nombre){
-        Menu menu = new Menu();
-        menu.setNombre(nombre);
-        this.listaDeMenues.remove(menu);
     }
 
     @Override
