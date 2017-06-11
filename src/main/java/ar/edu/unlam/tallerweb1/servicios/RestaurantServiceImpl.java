@@ -35,8 +35,16 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantDao.obtenerListaDeRestaurantsPorNombre(nombre);
     }
 
-    public Restaurant obtenerRestaurantPorId(Integer id) throws Exception{
+    public Restaurant obtenerRestaurantPorId(Long id) throws Exception{
         return restaurantDao.obtenerRestaurantPorId(id);
+    }
+
+    public List<String> obtenerListaDeCategorias(){
+        return restaurantDao.obtenerListaDeCategorias();
+    }
+
+    public List<Restaurant> obtenerListaDeRestaurantsPorCategoria(String tipo){
+        return restaurantDao.obtenerListaDeRestaurantsPorCategoria(tipo);
     }
 
     @Transactional

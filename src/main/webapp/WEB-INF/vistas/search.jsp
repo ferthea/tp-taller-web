@@ -12,8 +12,6 @@
 <jsp:include page="_Header.jsp" />
 
 <div class="container" id ="container">
-  <div class="row">
-    <div class="col s12 m10 offset-m1">
       <div class="row">
         <c:if test="${error != null}">
           <h5 class="center-align">No se han encontrado resultados.</h5>
@@ -27,7 +25,7 @@
           <div class="col s12 m5 offset-m1">
             <div class="card">
               <div class="card-image">
-                <a href="/restaurants/${restaurant.getNombre().replaceAll(" ", "_")}"}><img src="images/restaurant.jpg">
+                <a href="/restaurants/${restaurant.getId()}"}><img src="images/restaurant.jpg">
                   <span class="card-title">${restaurant.getNombre()}</span></a>
               </div>
               <div class="card-content">
@@ -38,7 +36,6 @@
         </c:forEach>
       </div>
     </div>
-  </div>
 </div>
 
 <jsp:include page="_Footer.jsp" />

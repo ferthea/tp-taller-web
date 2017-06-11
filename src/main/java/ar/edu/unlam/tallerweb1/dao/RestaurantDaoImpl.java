@@ -6,6 +6,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,12 +46,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
         return restaurant;
     }
 
-    public Restaurant obtenerRestaurantPorId(Integer id) throws Exception{
+    public Restaurant obtenerRestaurantPorId(Long id) throws Exception{
         Restaurant restaurant = (Restaurant) sessionFactory.openSession()
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.eq("id", id))
                 .uniqueResult();
-        System.out.println(restaurant);
         if(restaurant == null) throw new Exception("Restaurant not found");
         return restaurant;
     }
@@ -60,6 +61,25 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 .openSession()
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.like("nombre", nombre, MatchMode.ANYWHERE))
+                .list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> obtenerListaDeCategorias(){
+        return (List<String>) sessionFactory
+                .openSession()
+                .createCriteria(Restaurant.class)
+                .setProjection(Projections.property("tipo"))
+                .setProjection(Projections.distinct(Projections.property("tipo")))
+                .list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Restaurant> obtenerListaDeRestaurantsPorCategoria(String categoria){
+        return (List<Restaurant>) sessionFactory
+                .openSession()
+                .createCriteria(Restaurant.class)
+                .add(Restrictions.eq("tipo", categoria))
                 .list();
     }
 }

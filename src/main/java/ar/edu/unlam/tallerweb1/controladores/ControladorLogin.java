@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.View;
 
 import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
@@ -42,7 +43,8 @@ public class ControladorLogin {
 	}
 	
 	@RequestMapping(path = "/registro", method = RequestMethod.POST)
-	public ModelAndView validarRegistro(@ModelAttribute("user") User user){
+	public ModelAndView validarRegistro(@ModelAttribute("user") User user,
+										HttpServletRequest request){
 		ModelMap model = new ModelMap();
 		List<String> errores = new ArrayList<String>();
 		
@@ -82,7 +84,8 @@ public class ControladorLogin {
 	}
 
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-	public ModelAndView validarLogin(@ModelAttribute("user") User user){
+	public ModelAndView validarLogin(@ModelAttribute("user") User user,
+									 HttpServletRequest request){
 		ModelMap model = new ModelMap();
 		List<String> errores = new ArrayList<>();
 
@@ -95,7 +98,9 @@ public class ControladorLogin {
 
 		if(errores.size() == 0){
 			try{
-				if(loginService.consultarUsuario(user) != null){
+				User usuario = loginService.consultarUsuario(user);
+				if(usuario != null){
+					request.getSession().setAttribute("user", usuario);
 					return new ModelAndView("redirect:/index");
 				}
 			}
@@ -107,11 +112,20 @@ public class ControladorLogin {
 		return  new ModelAndView("login", model);
 	}
 
+	@RequestMapping("/logout")
+	public ModelAndView logout(HttpServletRequest request){
+		request.getSession().invalidate();
+		return new ModelAndView("redirect:/index");
+	}
+
 	@RequestMapping(path = "/index", method = RequestMethod.GET)
 	public ModelAndView index(){
 		ModelMap model = new ModelMap();
 		List<Restaurant> restaurantes = restaurantService.obtenerListaDeRestaurants();
+		List<String> categorias = restaurantService.obtenerListaDeCategorias();
+		System.out.print("Cantidad de categorias: " + categorias.size());
 		model.put("restaurants", restaurantes);
+		model.put("categorias", categorias);
 		return new ModelAndView("index", model);
 	}
 

@@ -18,7 +18,7 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @RequestMapping(value = "/restaurants/{idRestaurant}", method = RequestMethod.GET)
-    public ModelAndView getRestaurant(@PathVariable("idRestaurant") Integer id){
+    public ModelAndView getRestaurant(@PathVariable("idRestaurant") Long id){
         ModelMap model = new ModelMap();
 
         try{

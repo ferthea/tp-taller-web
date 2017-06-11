@@ -11,6 +11,11 @@
 <body>
 	<jsp:include page="_Header.jsp" />
 
+	<c:if test="${sessionScope.logged != null}">
+		TAS LOGEADO PERRO
+	</c:if>
+
+
 	  <div class="container" id ="container">
 		  <div class="row">
 			  <div class="col s12 m11 offset-m1">
@@ -23,6 +28,23 @@
 				  </form>
 			  </div>
 		  </div>
+		  <div class="row" id="filter" style="display: none">
+			  <div class="col s12 m11 offset-m1">
+				  <strong>O busca por categoria</strong>
+				  <div>
+					  <c:forEach items="${categorias}" var="categoria">
+						  <a href="/search?category=${categoria}"><div class="chip">${categoria}</div></a>
+					  </c:forEach>
+				  </div>
+			  </div>
+		  </div>
+
+		  <style>
+			  div.card-content > p > i, span {
+				  display: inline-flex;
+				  vertical-align: middle;
+			  }
+		  </style>
 		  <div class="row">
 			  <c:forEach items="${restaurants}" var="restaurant">
 				  <div class="col s12 m5 offset-m1">
@@ -32,13 +54,24 @@
 							  <span class="card-title">${restaurant.getNombre()}</span></a>
 						  </div>
 						  <div class="card-content">
-							  <p><i class="material-icons">location_on</i> ${restaurant.getDireccion()}</p>
+							  <p><i class="material-icons">keyboard_arrow_right</i><span>${restaurant.getTipo()}</span></p>
+							  <p><i class="material-icons">location_on</i><span>${restaurant.getDireccion()}</span></p>
 						  </div>
 					  </div>
 				  </div>
 			  </c:forEach>
 		  </div>
 	  </div>
+
+	<script type="application/javascript">
+		document.getElementById("search").addEventListener("focus", function(){
+		    $("#filter").fadeIn(250);
+		})
+
+        document.getElementById("search").addEventListener("focusout", function(){
+            $("#filter").fadeOut(250);
+        })
+	</script>
 
 	<jsp:include page="_Footer.jsp" />
 </body>

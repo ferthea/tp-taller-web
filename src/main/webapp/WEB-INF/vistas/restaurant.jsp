@@ -20,16 +20,40 @@
       <div class="col s12 m10 offset-m1">
         <h5 class="center-align">
           ${restaurant.getNombre()}
-          <a class="btn-floating btn-large light-green lighten-1 right pulse" href="/reservar">
-            <i class="large material-icons">mode_edit</i>
-          </a>
         </h5>
 
       </div>
     </div>
+
+    <div class="row">
+      <div class="input-field col s12 m4">
+        <select id="filtroDeIngredientes" multiple>
+          <option value="" disabled selected>Selecciona ingrediente</option>
+        </select>
+        <label>Filtrar ingredientes</label>
+      </div>
+      <a href="/reservar?restaurant=${restaurant.getId()}" class="btn-floating btn-large waves-effect waves-light #9ccc65 light-green lighten-1 right pulse"><i class="material-icons">add</i></a>
+    </div>
+    <div class="row">
+      <c:forEach items="${restaurant.getListaDeMenues()}" var="menu">
+        <div class="card menu" data-ingredientes="${String.join(',', menu.getIngredientes())}">
+          <div class="card-content" >
+            <span class="card-title">${menu.getNombre()}</span>
+            <span style="float:right">$${menu.getPrecio()}</span>
+            <p>${menu.getDescripcion()}</p>
+          </div>
+          <div class="card-action">
+            <c:forEach items="${menu.getIngredientes()}" var="ingrediente">
+              <div class="chip">${ingrediente}</div>
+            </c:forEach>
+          </div>
+        </div>
+      </c:forEach>
+    </div>
   </c:if>
 </div>
 
+<script type="application/javascript" src="/js/restaurant.js"></script>
 <jsp:include page="_Footer.jsp" />
 </body>
 </html>
