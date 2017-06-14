@@ -15,6 +15,8 @@
 					<ul id="usermenu" class="dropdown-content">
 						<li><a href="/misreservas">Reservas</a></li>
 						<li class="divider"></li>
+						<li><a href="/misrestaurantes">Mis restaurantes</a></li>
+						<li class="divider"></li>
 						<li><a href="/logout">Salir</a></li>
 					</ul>
 				</c:if>

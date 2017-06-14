@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -12,6 +13,8 @@ public class User {
 	private String apellido;
 	private String email;
 	private String password;
+	@OneToMany
+	private List<Restaurant> listaDeRestaurantes;
 	
 	public Long getId() {
 		return id;
@@ -42,5 +45,11 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public List<Restaurant> getListaDeRestaurantes(){
+		return listaDeRestaurantes;
+	}
+	public void setListaDeRestaurantes(List<Restaurant> listaDeRestaurantes){
+		this.listaDeRestaurantes = listaDeRestaurantes;
 	}
 }
