@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,8 +14,8 @@ public class User {
 	private String apellido;
 	private String email;
 	private String password;
-	@OneToMany
-	private List<Restaurant> listaDeRestaurantes;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Restaurant> listaDeRestaurantes = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -51,5 +52,9 @@ public class User {
 	}
 	public void setListaDeRestaurantes(List<Restaurant> listaDeRestaurantes){
 		this.listaDeRestaurantes = listaDeRestaurantes;
+	}
+
+	public void agregarNuevoRestaurant(Restaurant restaurant){
+		this.listaDeRestaurantes.add(restaurant);
 	}
 }

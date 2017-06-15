@@ -39,15 +39,19 @@ public class RestaurantController {
         ModelMap model = new ModelMap();
         List<String> errores = new ArrayList<>();
 
-        if(request.getSession().getAttribute("user") == null){
-            User user = new User();
+        User user = (User) request.getSession().getAttribute("user");
+
+        if(user == null){
+            User userModel = new User();
             errores.add("Debes estar logeado para realizar esta acción");
             model.put("errores", errores);
-            model.put("user", user);
+            model.put("user", userModel);
             return new ModelAndView("login", model);
         }
+        List<Restaurant> restaurantsDelUser = user.getListaDeRestaurantes();
+        model.put("restaurants", restaurantsDelUser);
 
-        return new ModelAndView("misrestaurantes");
+        return new ModelAndView("misrestaurantes", model);
     }
 
 }

@@ -1,8 +1,10 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import ar.edu.unlam.tallerweb1.dao.RestaurantDao;
+import ar.edu.unlam.tallerweb1.dao.UserDao;
 import ar.edu.unlam.tallerweb1.modelo.Menu;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
+import ar.edu.unlam.tallerweb1.modelo.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Inject
     RestaurantDao restaurantDao;
+
+    @Inject
+    UserDao userDao;
 
     @Override
     public List<Restaurant> obtenerListaDeRestaurants() {
@@ -47,9 +52,14 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantDao.obtenerListaDeRestaurantsPorCategoria(tipo);
     }
 
+    public List<Restaurant> obtenerListaDeRestaurantsDeUnUsuario(User user){
+        return userDao.obtenerListaDeRestaurantesPorUsuario(user);
+    }
+
     @Transactional
     public void cargarMenues(){
-        Restaurant primerRestaurant = new Restaurant("Parrilla marcelo", "Parrilla", "Rivadavia 3285", 45);
+
+        /*Restaurant primerRestaurant = new Restaurant("Parrilla marcelo", "Parrilla", "Rivadavia 3285", 45);
         Restaurant segundoRestaurant = new Restaurant("Pizzeria megapizzas", "Pizzeria", "Saavedra 912", 30);
         Restaurant tercerRestaurant = new Restaurant("La casa italiana", "Restaurant", "Anchorena 293", 70);
 
@@ -65,5 +75,13 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantDao.agregarRestaurant(primerRestaurant);
         restaurantDao.agregarRestaurant(segundoRestaurant);
         restaurantDao.agregarRestaurant(tercerRestaurant);
+        Restaurant restaurantRodolfo = new Restaurant("Superparrilla", "Parrilla", "Calle falsa 123", 30);
+        User nuevoUser = new User();
+        nuevoUser.setApellido("Argento");
+        nuevoUser.setNombre("Rodolfo");
+        nuevoUser.setPassword("password");
+        nuevoUser.setEmail("rodolfo@gmail.com");
+        nuevoUser.agregarNuevoRestaurant(restaurantRodolfo);
+        userDao.registrarUsuario(nuevoUser);*/
     }
 }

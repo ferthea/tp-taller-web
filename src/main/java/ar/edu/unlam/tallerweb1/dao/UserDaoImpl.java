@@ -1,15 +1,19 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import java.beans.Transient;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
+import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.modelo.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
@@ -24,9 +28,10 @@ public class UserDaoImpl implements UserDao {
 		List<User> listaDeUsuarios = session.createCriteria(User.class).list();
 		return listaDeUsuarios;
 	}
-	
+
+	@Transactional
 	public void registrarUsuario(User usuario){
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.save(usuario);
 	}
 
@@ -41,5 +46,15 @@ public class UserDaoImpl implements UserDao {
 			throw new UserNotFoundException("No se ha encontrado un usuario con los datos ingresados");
 		}
 		return usuario;
+	}
+
+	@Transactional
+	public List<Restaurant> obtenerListaDeRestaurantesPorUsuario(User user){
+		User usuario = (User) sessionFactory.getCurrentSession()
+				.createCriteria(User.class)
+				.add(Restrictions.eq("id", user.getId()))
+				.uniqueResult();
+		System.out.print(usuario.getListaDeRestaurantes());
+		return usuario.getListaDeRestaurantes();
 	}
 }
