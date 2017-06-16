@@ -43,8 +43,7 @@ public class ControladorLogin {
 	}
 	
 	@RequestMapping(path = "/registro", method = RequestMethod.POST)
-	public ModelAndView validarRegistro(@ModelAttribute("user") User user,
-										HttpServletRequest request){
+	public ModelAndView validarRegistro(@ModelAttribute("user") User user){
 		ModelMap model = new ModelMap();
 		List<String> errores = new ArrayList<String>();
 		

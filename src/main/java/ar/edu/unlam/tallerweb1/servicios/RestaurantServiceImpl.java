@@ -19,9 +19,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Inject
     RestaurantDao restaurantDao;
 
-    @Inject
-    UserDao userDao;
-
     @Override
     public List<Restaurant> obtenerListaDeRestaurants() {
         return restaurantDao.obtenerRestaurants();
@@ -50,10 +47,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     public List<Restaurant> obtenerListaDeRestaurantsPorCategoria(String tipo){
         return restaurantDao.obtenerListaDeRestaurantsPorCategoria(tipo);
-    }
-
-    public List<Restaurant> obtenerListaDeRestaurantsDeUnUsuario(User user){
-        return userDao.obtenerListaDeRestaurantesPorUsuario(user);
     }
 
     @Transactional

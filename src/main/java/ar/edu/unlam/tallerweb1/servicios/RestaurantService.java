@@ -9,7 +9,6 @@ public interface RestaurantService {
     List<Restaurant> obtenerListaDeRestaurants();
     List<Restaurant> obtenerListaDeRestaurantsPorNombre(String nombre);
     List<Restaurant> obtenerListaDeRestaurantsPorCategoria(String tipo);
-    List<Restaurant> obtenerListaDeRestaurantsDeUnUsuario(User user);
     List<String> obtenerListaDeCategorias();
     Restaurant obtenerRestaurantPorId(Long id) throws Exception;
     Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception;

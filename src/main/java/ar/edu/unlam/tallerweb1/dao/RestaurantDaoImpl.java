@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import ar.edu.unlam.tallerweb1.modelo.Menu;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
+import ar.edu.unlam.tallerweb1.modelo.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,11 +29,6 @@ public class RestaurantDaoImpl implements RestaurantDao {
     @SuppressWarnings("unchecked")
     public List<Restaurant> obtenerRestaurants() {
         return (List<Restaurant>) sessionFactory.openSession().createCriteria(Restaurant.class).list();
-    }
-
-    @Override
-    public void agregarRestaurant(Restaurant restaurant) {
-        sessionFactory.getCurrentSession().save(restaurant);
     }
 
     @Override

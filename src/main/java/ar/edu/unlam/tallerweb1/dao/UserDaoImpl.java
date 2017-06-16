@@ -29,6 +29,19 @@ public class UserDaoImpl implements UserDao {
 		return listaDeUsuarios;
 	}
 
+	@Override
+	@Transactional
+	public void agregarRestaurantAUnUsuario(User user, Restaurant restaurant){
+		Session session = sessionFactory.getCurrentSession();
+		User currentUser = (User) session.createCriteria(User.class)
+				.add(Restrictions.eq("id", user.getId()))
+				.uniqueResult();
+
+		currentUser.agregarNuevoRestaurant(restaurant);
+
+		session.update(currentUser);
+	}
+
 	@Transactional
 	public void registrarUsuario(User usuario){
 		Session session = sessionFactory.getCurrentSession();

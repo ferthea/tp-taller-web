@@ -12,4 +12,5 @@ public interface UserDao {
 	void registrarUsuario(User usuario);
 	User consultarUsuario(User user) throws UserNotFoundException;
 	List<Restaurant> obtenerListaDeRestaurantesPorUsuario(User user);
+	void agregarRestaurantAUnUsuario(User user, Restaurant restaurant);
 }
