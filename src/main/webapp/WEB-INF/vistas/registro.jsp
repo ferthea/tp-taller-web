@@ -48,6 +48,17 @@
 				          <label for="password">Password</label>
 				        </div>
 				</div>
+
+				<div class="row">
+					<div class="input-field col s6">
+						<form:radiobutton path="tipo" value="cliente" id="r_cliente"/>
+						<label for="r_cliente">Cliente</label>
+					</div>
+					<div class="input-field col s6">
+						<form:radiobutton path="tipo" value="restaurant" id="r_restaurant"/>
+						<label for="r_restaurant">Restaurant</label>
+					</div>
+				</div>
 				
 				<div class="row">
 						<div class="input-field col s12">
@@ -56,6 +67,7 @@
 						  </button>
 				        </div>
 				</div>
+
 				
 				<div class="row">
 					<c:if test="${not empty errores}">

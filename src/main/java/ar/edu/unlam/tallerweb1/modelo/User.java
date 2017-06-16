@@ -14,6 +14,7 @@ public class User {
 	private String apellido;
 	private String email;
 	private String password;
+	private String tipo;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Restaurant> listaDeRestaurantes = new ArrayList<>();
 	
@@ -46,6 +47,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getTipo(){
+		return tipo;
+	}
+	public void setTipo(String tipo){
+		this.tipo = tipo;
 	}
 	public List<Restaurant> getListaDeRestaurantes(){
 		return listaDeRestaurantes;
