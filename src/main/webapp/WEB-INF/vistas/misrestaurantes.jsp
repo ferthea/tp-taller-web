@@ -36,8 +36,8 @@
                 <c:forEach items="${restaurants}" var="restaurant">
                     <div class="col s12 m5 offset-m1">
                         <div class="card">
-                            <div class="card-image">
-                                <a href="/restaurants/${restaurant.getId()}"}><img src="images/restaurant.jpg">
+                            <div class="card-image" style="background-image: url('/images/restaurants/${restaurant.getFoto()}'); background-size: cover;">
+                                <a href="/restaurants/${restaurant.getId()}"}>
                                     <span class="card-title">${restaurant.getNombre()}</span></a>
                             </div>
                             <div class="card-content">

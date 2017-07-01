@@ -32,7 +32,12 @@
         </select>
         <label>Filtrar ingredientes</label>
       </div>
-      <a href="/reservar?restaurant=${restaurant.getId()}" class="btn-floating btn-large waves-effect waves-light #9ccc65 light-green lighten-1 right pulse"><i class="material-icons">add</i></a>
+      <c:if test="${ tipo == 'duenio'}">
+        <a href="/editarRestaurant?restaurant=${restaurant.getId()}" class="btn-floating btn-large waves-effect waves-light #9ccc65 light-green lighten-1 right"><i class="material-icons">mode_edit</i></a>
+      </c:if>
+      <c:if test="${ tipo == 'cliente'}">
+        <a href="/reservar?restaurant=${restaurant.getId()}" class="btn-floating btn-large waves-effect waves-light #9ccc65 light-green lighten-1 right pulse"><i class="material-icons">add</i></a>
+      </c:if>
     </div>
     <div class="row">
       <c:forEach items="${restaurant.getListaDeMenues()}" var="menu">

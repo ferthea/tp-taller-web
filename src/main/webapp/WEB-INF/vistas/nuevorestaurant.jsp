@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col s12 m8 offset-m2">
-            <form:form action="nuevorestaurant" modelAttribute="restaurant" method="POST">
+            <form:form action="nuevorestaurant" modelAttribute="restaurant" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="input-field">
                         <form:input path="nombre" id="nombre" type="text" class="form-control" />
@@ -33,8 +33,10 @@
 
                 <div class="row">
                     <div class="input-field">
-                        <form:input path="tipo" id="tipo" type="text" class="form-control" placeholder="Restaurant, parrilla, heladería, etc." />
-                        <label for="tipo">Categoria</label>
+                        <form:select path="tipo"  class="browser-default">
+                            <form:option value="" disabled="true" selected="true">Categoría</form:option>
+                            <form:options items="${tiposDeRestaurant}" />
+                        </form:select>
                     </div>
                 </div>
 
@@ -53,6 +55,18 @@
                 </div>
 
                 <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn light-green darken-1">
+                            <span>Foto</span>
+                            <input type="file" id="foto_restaurant" name="foto_restaurant">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <button class="btn waves-effect waves-light light-green darken-1" type="submit" name="submit">Enviar
                         <i class="material-icons right">send</i>
                     </button>
@@ -60,8 +74,9 @@
 
             </form:form>
         </div>
-
-        <div class="row">
+    </div>
+    <div class="row">
+        <div class="col s12 m8 offset-m2">
             <c:if test="${not empty errores}">
                 <div>
                     <h5 class="red-text text-darken-4">Se han producido los siguientes errores:</h5>

@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service("restaurantDao")
+@Transactional
 public class RestaurantDaoImpl implements RestaurantDao {
 
     @Inject
@@ -28,12 +29,12 @@ public class RestaurantDaoImpl implements RestaurantDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Restaurant> obtenerRestaurants() {
-        return (List<Restaurant>) sessionFactory.openSession().createCriteria(Restaurant.class).list();
+        return (List<Restaurant>) sessionFactory.getCurrentSession().createCriteria(Restaurant.class).list();
     }
 
     @Override
     public Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception{
-        Restaurant restaurant = (Restaurant) sessionFactory.openSession()
+        Restaurant restaurant = (Restaurant) sessionFactory.getCurrentSession()
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.eq("nombre", nombre))
                 .uniqueResult();
@@ -43,7 +44,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
     }
 
     public Restaurant obtenerRestaurantPorId(Long id) throws Exception{
-        Restaurant restaurant = (Restaurant) sessionFactory.openSession()
+        Restaurant restaurant = (Restaurant) sessionFactory.getCurrentSession()
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.eq("id", id))
                 .uniqueResult();
@@ -54,7 +55,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
     @SuppressWarnings("unchecked")
     public List<Restaurant> obtenerListaDeRestaurantsPorNombre(String nombre){
         return (List<Restaurant>) sessionFactory
-                .openSession()
+                .getCurrentSession()
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.like("nombre", nombre, MatchMode.ANYWHERE))
                 .list();
@@ -63,7 +64,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
     @SuppressWarnings("unchecked")
     public List<String> obtenerListaDeCategorias(){
         return (List<String>) sessionFactory
-                .openSession()
+                .getCurrentSession()
                 .createCriteria(Restaurant.class)
                 .setProjection(Projections.property("tipo"))
                 .setProjection(Projections.distinct(Projections.property("tipo")))
@@ -73,9 +74,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
     @SuppressWarnings("unchecked")
     public List<Restaurant> obtenerListaDeRestaurantsPorCategoria(String categoria){
         return (List<Restaurant>) sessionFactory
-                .openSession()
+                .getCurrentSession()
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.eq("tipo", categoria))
                 .list();
     }
+
 }

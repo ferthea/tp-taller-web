@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import ar.edu.unlam.tallerweb1.enums.TipoDeRestaurant;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -18,18 +19,11 @@ public class Restaurant {
     private String tipo;
     private String direccion;
     private Integer maximaCantidadDeClientes;
-    @OneToMany(cascade = CascadeType.ALL)
+    private String foto;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Menu> listaDeMenues;
 
     public Restaurant(){
-    }
-
-    public Restaurant(String nombre, String tipo, String direccion, Integer cantidadDeClientes){
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.tipo = tipo;
-        this.maximaCantidadDeClientes = cantidadDeClientes;
-        this.listaDeMenues = new ArrayList<>();
     }
 
     public Long getId() {
@@ -71,6 +65,15 @@ public class Restaurant {
     public void setMaximaCantidadDeClientes(Integer maximaCantidadDeClientes) {
         this.maximaCantidadDeClientes = maximaCantidadDeClientes;
     }
+
+    public String getFoto(){
+        return foto;
+    }
+
+    public void setFoto(String foto){
+        this.foto = foto;
+    }
+
 
     public List<Menu> getListaDeMenues() {
         return listaDeMenues;

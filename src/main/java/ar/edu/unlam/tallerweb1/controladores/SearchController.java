@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import ar.edu.unlam.tallerweb1.enums.TipoDeRestaurant;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import ar.edu.unlam.tallerweb1.servicios.RestaurantService;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class SearchController {
                 query != null ?
                         restaurantService.obtenerListaDeRestaurantsPorNombre(query) :
                         category != null ?
-                                restaurantService.obtenerListaDeRestaurantsPorCategoria(category) : new ArrayList<Restaurant>();
+                                restaurantService.obtenerListaDeRestaurantsPorCategoria(category.toString()) : new ArrayList<Restaurant>();
 
         if(listaDeRestaurants.size() == 0){
             model.put("error", "No se han encontrado resultados.");

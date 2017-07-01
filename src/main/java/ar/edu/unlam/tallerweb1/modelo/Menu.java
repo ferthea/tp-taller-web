@@ -18,13 +18,6 @@ public class Menu {
     public Menu(){
     }
 
-    public Menu(String nombre, Double precio, String descripcion, List<String> ingredientes){
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.ingredientes = ingredientes;
-    }
-
     public Long getId() {
         return id;
     }

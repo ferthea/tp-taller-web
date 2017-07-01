@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.View;
 
+import ar.edu.unlam.tallerweb1.enums.TipoDeRestaurant;
 import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import ar.edu.unlam.tallerweb1.servicios.LoginService;
 import ar.edu.unlam.tallerweb1.servicios.RestaurantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +36,7 @@ public class ControladorLogin {
 
 	@Inject
 	private RestaurantService restaurantService;
+
 
 	@RequestMapping("/registro")
 	public ModelAndView registro(){
@@ -121,18 +125,9 @@ public class ControladorLogin {
 	public ModelAndView index(){
 		ModelMap model = new ModelMap();
 		List<Restaurant> restaurantes = restaurantService.obtenerListaDeRestaurants();
-		List<String> categorias = restaurantService.obtenerListaDeCategorias();
-		System.out.print("Cantidad de categorias: " + categorias.size());
 		model.put("restaurants", restaurantes);
-		model.put("categorias", categorias);
+		model.put("categorias", TipoDeRestaurant.values());
 		return new ModelAndView("index", model);
-	}
-
-	@RequestMapping(path = "/cargardatos", method = RequestMethod.GET)
-	public ModelAndView cargar(){
-		restaurantService.cargarMenues();
-
-		return new ModelAndView("index");
 	}
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)

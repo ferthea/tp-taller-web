@@ -13,5 +13,5 @@ public interface RestaurantService {
     Restaurant obtenerRestaurantPorId(Long id) throws Exception;
     Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception;
     void agregarNuevoRestaurant(Restaurant restaurant);
-    void cargarMenues();
+    Boolean usuarioEsDuenioDeUnRestaurant(User usuario, Restaurant restaurant);
 }

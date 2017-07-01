@@ -49,32 +49,10 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantDao.obtenerListaDeRestaurantsPorCategoria(tipo);
     }
 
-    @Transactional
-    public void cargarMenues(){
-
-        /*Restaurant primerRestaurant = new Restaurant("Parrilla marcelo", "Parrilla", "Rivadavia 3285", 45);
-        Restaurant segundoRestaurant = new Restaurant("Pizzeria megapizzas", "Pizzeria", "Saavedra 912", 30);
-        Restaurant tercerRestaurant = new Restaurant("La casa italiana", "Restaurant", "Anchorena 293", 70);
-
-        primerRestaurant.agregarMenu(new Menu("Parrillada completa", 425.00, "Descripcion del menu...", new ArrayList<>(Arrays.asList("Carne roja", "Carne blanca"))));
-        primerRestaurant.agregarMenu(new Menu("Bife de chorizo con papas fritas", 150.00, "Bife de chorizo bla bla", new ArrayList<String>(Arrays.asList("Carne roja", "papas fritas"))));
-
-        segundoRestaurant.agregarMenu(new Menu("Grande de muzzarella", 180.00, "Descripcion pizza de muzza", new ArrayList<String>(Arrays.asList("Pizza", "Muzzarella"))));
-        segundoRestaurant.agregarMenu(new Menu("Grande napolitana", 230.00, "Descripcion piza napolitana", new ArrayList<String>(Arrays.asList("Pizza", "Tomate", "Oregano"))));
-        segundoRestaurant.agregarMenu(new Menu("Fugazzeta rellena", 300.00, "Descripcion fugazzeta rellena", new ArrayList<String>(Arrays.asList("Pizza", "Cebolla"))));
-
-        tercerRestaurant.agregarMenu(new Menu("Spaghettis con salsa filetto", 130.00, "fideos...", new ArrayList<String>(Arrays.asList("Pasta"))));
-
-        restaurantDao.agregarRestaurant(primerRestaurant);
-        restaurantDao.agregarRestaurant(segundoRestaurant);
-        restaurantDao.agregarRestaurant(tercerRestaurant);
-        Restaurant restaurantRodolfo = new Restaurant("Superparrilla", "Parrilla", "Calle falsa 123", 30);
-        User nuevoUser = new User();
-        nuevoUser.setApellido("Argento");
-        nuevoUser.setNombre("Rodolfo");
-        nuevoUser.setPassword("password");
-        nuevoUser.setEmail("rodolfo@gmail.com");
-        nuevoUser.agregarNuevoRestaurant(restaurantRodolfo);
-        userDao.registrarUsuario(nuevoUser);*/
+    public Boolean usuarioEsDuenioDeUnRestaurant(User usuario, Restaurant restaurant){
+        for(Restaurant res : usuario.getListaDeRestaurantes()){
+            if(res.getId() == restaurant.getId()) return true;
+        }
+        return false;
     }
 }
