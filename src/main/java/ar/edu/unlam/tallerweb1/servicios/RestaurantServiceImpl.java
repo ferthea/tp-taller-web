@@ -25,10 +25,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void agregarNuevoRestaurant(Restaurant restaurant) {
-    }
-
-    @Override
     public Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception{
         return restaurantDao.obtenerRestaurantPorNombre(nombre);
     }
@@ -54,5 +50,20 @@ public class RestaurantServiceImpl implements RestaurantService {
             if(res.getId() == restaurant.getId()) return true;
         }
         return false;
+    }
+
+    public Boolean usuearioEsDuenioDeUnRestaurant(User usuario, Long idRestaurant){
+        for(Restaurant res : usuario.getListaDeRestaurantes()){
+            if(res.getId() == idRestaurant) return true;
+        }
+        return false;
+    }
+
+    public void actualizarRestaurant(Restaurant restaurant){
+        restaurantDao.actualizarRestaurant(restaurant);
+    }
+
+    public void agregarMenuAUnRestaurant(Long id, Menu menu){
+        restaurantDao.agregarMenuAUnRestaurant(id, menu);
     }
 }

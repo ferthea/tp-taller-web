@@ -18,7 +18,7 @@
   <c:if test="${not empty restaurant}">
     <div class="row">
       <div class="col s12 m10 offset-m1">
-        <h5 class="center-align">
+        <h5 class="center-align top40">
           ${restaurant.getNombre()}
         </h5>
 
@@ -33,10 +33,26 @@
         <label>Filtrar ingredientes</label>
       </div>
       <c:if test="${ tipo == 'duenio'}">
-        <a href="/editarRestaurant?restaurant=${restaurant.getId()}" class="btn-floating btn-large waves-effect waves-light #9ccc65 light-green lighten-1 right"><i class="material-icons">mode_edit</i></a>
+        <div class="fixed-action-btn horizontal" style="right: 3%; top: 135px;">
+          <a class="btn-floating btn-large light-green lighten-1">
+            <i class="large material-icons">more_horiz</i>
+          </a>
+          <ul>
+            <li>
+              <a href="/editar_restaurant?idRestaurant=${restaurant.getId()}" title="editar" class="btn-floating light-green lighten-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar menu">
+               <i class="material-icons">mode_edit</i>
+              </a>
+            </li>
+            <li>
+              <a href="/agregar_menu?idRestaurant=${restaurant.getId()}" title="agregar menu" class="btn-floating light-green lighten-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Agregar menu">
+                <i class="material-icons">add</i>
+              </a>
+            </li>
+          </ul>
+        </div>
       </c:if>
       <c:if test="${ tipo == 'cliente'}">
-        <a href="/reservar?restaurant=${restaurant.getId()}" class="btn-floating btn-large waves-effect waves-light #9ccc65 light-green lighten-1 right pulse"><i class="material-icons">add</i></a>
+        <a href="/reservar?restaurant=${restaurant.getId()}" class="btn-floating btn-large waves-effect waves-light #9ccc65 light-green lighten-1 right pulse tooltipped" data-position="left" data-delay="50" data-tooltip="Reservar"><i class="material-icons">add</i></a>
       </c:if>
     </div>
     <div class="row">

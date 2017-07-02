@@ -1,6 +1,10 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,8 +16,9 @@ public class Menu {
     private String nombre;
     private Double precio;
     private String descripcion;
-    @ElementCollection
-    private List<String> ingredientes;
+    @ElementCollection()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> ingredientes = new ArrayList<>();
 
     public Menu(){
     }
@@ -56,6 +61,10 @@ public class Menu {
 
     public void setIngredientes(List<String> ingredientes) {
         this.ingredientes = ingredientes;
+    }
+
+    public void agregarIngrediente(String ingrediente){
+        this.ingredientes.add(ingrediente);
     }
 
     @Override

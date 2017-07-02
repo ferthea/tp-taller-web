@@ -1,7 +1,9 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -14,10 +16,10 @@ public class Reserva {
     private User user;
     @ManyToOne(cascade = CascadeType.ALL)
     private Restaurant restaurant;
-    private Date fecha = new Date();
+    private Date fecha;
     private Integer cantidadComensales;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Menu> pedido;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Pedido> pedidos = new ArrayList<>();
     private String observaciones;
 
     public Reserva(){
@@ -64,12 +66,12 @@ public class Reserva {
         this.cantidadComensales = cantidad_comensales;
     }
 
-    public List<Menu> getPedido() {
-        return pedido;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
-    public void setPedido(List<Menu> pedido) {
-        this.pedido = pedido;
+    public void setPedido(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public String getObservaciones() {
@@ -78,5 +80,9 @@ public class Reserva {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public void agregarPedido(Pedido pedido){
+        this.pedidos.add(pedido);
     }
 }

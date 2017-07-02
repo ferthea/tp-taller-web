@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.dao;
 import ar.edu.unlam.tallerweb1.modelo.Menu;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import ar.edu.unlam.tallerweb1.modelo.User;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +31,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Restaurant> obtenerRestaurants() {
-        return (List<Restaurant>) sessionFactory.getCurrentSession().createCriteria(Restaurant.class).list();
+        return (List<Restaurant>) sessionFactory.getCurrentSession()
+                .createCriteria(Restaurant.class)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .list();
     }
 
     @Override
@@ -78,6 +83,23 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.eq("tipo", categoria))
                 .list();
+    }
+
+    public void actualizarRestaurant(Restaurant restaurant){
+        sessionFactory.getCurrentSession().update(restaurant);
+    }
+
+    public void agregarMenuAUnRestaurant(Long id, Menu menu){
+        Session session = sessionFactory.getCurrentSession();
+
+        Restaurant restaurant = (Restaurant) session.
+                createCriteria(Restaurant.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
+
+        restaurant.agregarMenu(menu);
+
+        session.saveOrUpdate(restaurant);
     }
 
 }

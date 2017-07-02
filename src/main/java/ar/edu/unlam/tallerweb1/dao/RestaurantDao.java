@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import ar.edu.unlam.tallerweb1.modelo.Menu;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import ar.edu.unlam.tallerweb1.modelo.User;
 
@@ -12,4 +13,6 @@ public interface RestaurantDao {
     List<Restaurant> obtenerListaDeRestaurantsPorNombre(String nombre);
     List<Restaurant> obtenerListaDeRestaurantsPorCategoria(String categoria);
     List<String> obtenerListaDeCategorias();
+    void actualizarRestaurant(Restaurant restaurant);
+    void agregarMenuAUnRestaurant(Long id, Menu menu);
 }

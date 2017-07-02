@@ -2,6 +2,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background: #ececec;
 }
 
 #container {
@@ -11,4 +12,12 @@ body {
 .card-image {
     min-height: 300px;
     max-height: 300px;
+}
+
+div .top40 {
+    margin-top: 40px !important;
+}
+
+select {
+    background-color: #f1f1f1 !important;
 }
