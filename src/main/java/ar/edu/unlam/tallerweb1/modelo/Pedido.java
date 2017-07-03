@@ -10,7 +10,7 @@ public class Pedido {
     private Long id;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Menu menu;
-    private Integer cantidad;
+    private Integer cantidad = 0;
 
     public Long getId() {
         return id;

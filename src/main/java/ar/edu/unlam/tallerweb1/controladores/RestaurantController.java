@@ -3,9 +3,11 @@ package ar.edu.unlam.tallerweb1.controladores;
 import ar.edu.unlam.tallerweb1.enums.IngredientesEnum;
 import ar.edu.unlam.tallerweb1.enums.TipoDeRestaurant;
 import ar.edu.unlam.tallerweb1.modelo.Menu;
+import ar.edu.unlam.tallerweb1.modelo.Pedido;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import ar.edu.unlam.tallerweb1.modelo.User;
 import ar.edu.unlam.tallerweb1.modelo.validator.ValidatorResult;
+import ar.edu.unlam.tallerweb1.modelo.wrapper.PedidoListWrapper;
 import ar.edu.unlam.tallerweb1.servicios.RestaurantService;
 import ar.edu.unlam.tallerweb1.servicios.UserService;
 import ar.edu.unlam.tallerweb1.servicios.validators.MenuValidator;
@@ -51,12 +53,21 @@ public class RestaurantController {
 
         try{
             Restaurant restaurant = restaurantService.obtenerRestaurantPorId(id);
+            PedidoListWrapper pedidoListWrapper = new PedidoListWrapper();
+
+            for(Menu menu : restaurant.getListaDeMenues()){
+                Pedido pe = new Pedido();
+                pe.setMenu(menu);
+                pedidoListWrapper.agregarPedido(pe);
+            }
+
             String tipo = "";
             if(user != null && restaurantService.usuarioEsDuenioDeUnRestaurant(user, restaurant)) tipo = "duenio";
             if(user == null || user.getTipo().equals("cliente")) tipo = "cliente";
 
             model.put("tipo", tipo);
             model.put("restaurant", restaurant);
+            model.put("pedidoListWrapper", pedidoListWrapper);
         }catch(Exception e){
             System.err.print(e);
             model.put("error", "No se ha encontrado el restaurant solicitado");

@@ -30,6 +30,12 @@ $(document).ready(function(){
             }
         })
     })
+
+    $("#btn_reservar").click(function(e){
+        e.prevent_default;
+        console.log("TOQUE!");
+        $("#form_menu").submit();
+    })
 })
 
 function applyFilter(filtro){

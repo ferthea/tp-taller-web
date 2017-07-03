@@ -29,7 +29,31 @@
             </c:if>
 
             <c:if test="${empty error}">
-                <form action="reservar?restaurant_id=${restaurant.getId()}" method="post">
+                <form:form action="confirmar_reserva" method="post" modelAttribute="reserva">
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            <span class="grey-text">Dia (mes/dia/año)</span>
+                            <input type="datetime-local"  id="fecha" name="fecha">
+                            <input type="text" id="nueva_fecha" name="nueva_fecha" hidden>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <span class="grey-text">Cantidad de comensales</span>
+                            <form:select path="cantidadComensales">
+                                <c:forEach varStatus="i" begin="1" end="10">
+                                    <form:option value="${i.index}">${i.index}</form:option>
+                                </c:forEach>
+                            </form:select>
+                        </div>
+
+                        <div class="input-field col s12 m offset-m4 top40">
+                            <button class="btn waves-effect waves-light light-green darken-1" type="submit" name="submit" id="enviar">Continuar
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </form:form>
+                <!--<form action="confirmar_reserva.jsp" method="post">
                     <div class="row">
                         <div class="input-field col s12 m6">
                             <span class="grey-text">Dia (mes/dia/año)</span>
@@ -62,7 +86,7 @@
                             </button>
                         </div>
                     </div>
-                </form>
+                </form>!-->
             </c:if>
 
             <div class="row top40">
