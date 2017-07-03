@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import ar.edu.unlam.tallerweb1.exceptions.NoTableAvailableException;
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.modelo.validator.ValidatorResult;
 import ar.edu.unlam.tallerweb1.modelo.wrapper.PedidoHelper;
@@ -125,46 +126,21 @@ public class ReservaController {
     public ModelAndView crear_reserva(){
         ModelMap model = new ModelMap();
         Reserva reserva = (Reserva) request.getSession().getAttribute("reserva");
+        List<String> errores = new ArrayList<>();
 
-        reservaService.registrarReserva(reserva);
+        try{
+            reservaService.registrarReserva(reserva);
+        }catch(NoTableAvailableException e){
+            errores.add("No hay lugar disponible para la fecha solicitada");
+            return new ModelAndView("error_page");
+        }catch (Exception e){
+            System.err.print(e.getStackTrace());
+            errores.add("Ha ocurrido un error. Por favor, intentelo mas tarde");
+            return new ModelAndView("error_page");
+        }
 
         model.put("reserva", reserva);
         return new ModelAndView("reserva_exito", model);
     }
-
-    /*
-    @RequestMapping(path = "/reservar", method = RequestMethod.POST)
-    public ModelAndView reservar(@RequestParam(value = "restaurant_id", required = true) Long idR,
-                                 @RequestParam(value = "nueva_fecha") Long fecha,
-                                 @RequestParam(value = "cantidad_comensales") Integer cantidad_comensales,
-                                 RedirectAttributes redir){
-
-        try{
-
-            ValidatorResult resultado = reservaValidator.validarCantidadDeComensales(idR, fecha, cantidad_comensales);
-            if(!resultado.getResultado()){
-                redir.addFlashAttribute("errores_redirect", resultado.getErrores());
-                return new ModelAndView("redirect:/reservar?restaurant=" + idR);
-            }
-
-            ModelMap model = new ModelMap();
-            Restaurant restaurant = restaurantService.obtenerRestaurantPorId(idR);
-
-            PedidoListWrapper pedidoListWrapper = new PedidoListWrapper();
-            for(Menu menu : restaurant.getListaDeMenues()){
-                Pedido pe = new Pedido();
-                pe.setMenu(menu);
-                pedidoListWrapper.agregarPedido(pe);
-            }
-
-            model.put("menues", restaurant.getListaDeMenues());
-            model.put("restaurant", restaurant);
-            model.put("pedidoListWrapper", pedidoListWrapper);
-            return new ModelAndView("/seleccionar_menu", model);
-        }catch (Exception e){
-            System.err.print("ERROR: " + e);
-        }
-        return new ModelAndView("redirect:/index");
-    }*/
 
 }

@@ -130,6 +130,7 @@
         })
 
         $("#cantidad_comensales").on('change', chequearLugaresDisponibles);
+        $("#fecha").on('change', chequearLugaresDisponibles);
 
 
         const aux = new Date(new Date().setHours(new Date().getHours() - 2 )).toISOString().slice(0,16);
@@ -155,6 +156,14 @@
         function chequearLugaresDisponibles(){
             let lugares_seleccionados = $("#cantidad_comensales").val();
             let lugares_disponibles = $("#lugares_disponibles").text();
+            let fecha = $("#fecha").val();
+
+            if(new Date(fecha) < new Date()){
+                $(".toast-fecha").fadeOut();
+                $("#enviar").addClass("disabled");
+                Materialize.toast('No puedes reservar en el pasado!', 5000, 'red darken-4 toast-fecha')
+                return;
+            }
 
             if(parseInt(lugares_seleccionados) > parseInt(lugares_disponibles)){
                 $("#enviar").addClass("disabled");

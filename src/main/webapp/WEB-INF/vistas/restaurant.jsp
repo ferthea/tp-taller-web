@@ -40,7 +40,7 @@
           </a>
           <ul>
             <li>
-              <a href="/editar_restaurant?idRestaurant=${restaurant.getId()}" title="editar" class="btn-floating light-green lighten-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar menu">
+              <a href="/editar_restaurant?idRestaurant=${restaurant.getId()}" title="editar" class="btn-floating light-green lighten-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar restaurant">
                <i class="material-icons">mode_edit</i>
               </a>
             </li>
@@ -67,7 +67,6 @@
               <span class="card-title">${pedido.getMenu().getNombre()}</span>
               <span class="menu-precio" style="float:right">$${pedido.getMenu().getPrecio()}</span>
               <p>${pedido.getMenu().getDescripcion()}</p>
-              <p>Nombre: ${pedido.menu}</p>
             </div>
             <div class="card-action">
               <c:forEach items="${pedido.getMenu().getIngredientes()}" var="ingrediente">

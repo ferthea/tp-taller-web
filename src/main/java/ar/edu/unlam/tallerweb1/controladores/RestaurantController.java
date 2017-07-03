@@ -156,12 +156,13 @@ public class RestaurantController {
         ModelMap model = new ModelMap();
 
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null || !restaurantService.usuearioEsDuenioDeUnRestaurant(user, id)){
+        if(user == null || !restaurantService.usuarioEsDuenioDeUnRestaurant(user, id)){
             return new ModelAndView("redirect:/index");
         }
 
         try{
             Restaurant restaurant = restaurantService.obtenerRestaurantPorId(id);
+            request.getSession().setAttribute("restaurant_menu", restaurant.getListaDeMenues());
             model.put("restaurant", restaurant);
             model.put("tiposDeRestaurant", TipoDeRestaurant.values());
         }catch(Exception e){
@@ -176,7 +177,7 @@ public class RestaurantController {
                                           @RequestParam("foto_restaurant") MultipartFile foto){
 
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null || !restaurantService.usuearioEsDuenioDeUnRestaurant(user, id)){
+        if(user == null || !restaurantService.usuarioEsDuenioDeUnRestaurant(user, id)){
             return new ModelAndView("redirect:/index");
         }
 
@@ -194,7 +195,7 @@ public class RestaurantController {
                 model.put("error", "Ha ocurrido un error procesando la foto");
                 return new ModelAndView("error_page", model);
             }
-
+            restaurant.setListaDeMenues((List<Menu>) request.getSession().getAttribute("restaurant_menu"));
             restaurant.setFoto(newName);
             restaurantService.actualizarRestaurant(restaurant);
             return new ModelAndView("redirect:/misrestaurantes");
@@ -206,7 +207,7 @@ public class RestaurantController {
     public ModelAndView agregarMenu(@RequestParam("idRestaurant") Long id){
         ModelMap model = new ModelMap();
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null || !restaurantService.usuearioEsDuenioDeUnRestaurant(user, id)){
+        if(user == null || !restaurantService.usuarioEsDuenioDeUnRestaurant(user, id)){
             return new ModelAndView("redirect:/index");
         }
 
@@ -223,7 +224,7 @@ public class RestaurantController {
                                          @RequestParam("c_ingredientes") String[] ingredientes){
         ModelMap model = new ModelMap();
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null || !restaurantService.usuearioEsDuenioDeUnRestaurant(user, id)){
+        if(user == null || !restaurantService.usuarioEsDuenioDeUnRestaurant(user, id)){
             return new ModelAndView("redirect:/index");
         }
 

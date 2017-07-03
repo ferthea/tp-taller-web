@@ -11,8 +11,10 @@ import javax.swing.text.View;
 import ar.edu.unlam.tallerweb1.enums.TipoDeRestaurant;
 import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
+import ar.edu.unlam.tallerweb1.modelo.validator.ValidatorResult;
 import ar.edu.unlam.tallerweb1.servicios.LoginService;
 import ar.edu.unlam.tallerweb1.servicios.RestaurantService;
+import ar.edu.unlam.tallerweb1.servicios.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,6 +39,9 @@ public class ControladorLogin {
 	@Inject
 	private RestaurantService restaurantService;
 
+	@Inject
+	private UserValidator userValidator;
+
 
 	@RequestMapping("/registro")
 	public ModelAndView registro(){
@@ -49,32 +54,21 @@ public class ControladorLogin {
 	@RequestMapping(path = "/registro", method = RequestMethod.POST)
 	public ModelAndView validarRegistro(@ModelAttribute("user") User user){
 		ModelMap model = new ModelMap();
-		List<String> errores = new ArrayList<String>();
-		
-		if(user.getNombre().length() < 3){
-			errores.add("El campo Nombre debe tener al menos 3 caracteres.");
-		}
-		
-		if(user.getApellido().length() < 3){
-			errores.add("El campo Apellido debe tener al menos 3 caracteres.");
-		}
-		
-		if(user.getPassword().length() < 6){
-			errores.add("La contrase�a debe tener al menos 6 caracteres.");
-		}
-		
-		if(errores.size() == 0){
+
+		ValidatorResult validator = userValidator.validarUsuario(user);
+
+		if(validator.getResultado()){
 			try{
 				servicioRegistro.registrarUser(user);
 				model.put("registrado", "true");
 			}
 			catch(UserAlreadyExistsException e){
-				errores.add("Ya existe un usuario con ese email");
+				validator.agregarError("Ya existe un usuario con ese email");
 			}
 		}
 		
 		model.put("user", user);
-		model.put("errores", errores);
+		model.put("errores", validator.getErrores());
 		return new ModelAndView("registro", model);
 	}
 

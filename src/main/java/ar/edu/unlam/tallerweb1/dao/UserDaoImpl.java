@@ -65,7 +65,13 @@ public class UserDaoImpl implements UserDao {
 				.createCriteria(User.class)
 				.add(Restrictions.eq("id", user.getId()))
 				.uniqueResult();
-		System.out.print(usuario.getListaDeRestaurantes());
 		return usuario.getListaDeRestaurantes();
+	}
+
+	public User obtenerUserPorId(Long id){
+		return (User) sessionFactory.getCurrentSession()
+				.createCriteria(User.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
 	}
 }

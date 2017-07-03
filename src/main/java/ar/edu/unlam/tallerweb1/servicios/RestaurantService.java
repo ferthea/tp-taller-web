@@ -13,7 +13,7 @@ public interface RestaurantService {
     Restaurant obtenerRestaurantPorId(Long id) throws Exception;
     Restaurant obtenerRestaurantPorNombre(String nombre) throws Exception;
     Boolean usuarioEsDuenioDeUnRestaurant(User usuario, Restaurant restaurant);
-    Boolean usuearioEsDuenioDeUnRestaurant(User usuario, Long idRestaurant);
+    Boolean usuarioEsDuenioDeUnRestaurant(User usuario, Long idRestaurant);
     void actualizarRestaurant(Restaurant restaurant);
     void agregarMenuAUnRestaurant(Long id, Menu menu);
     Menu obtenerMenuPorId(Long id);

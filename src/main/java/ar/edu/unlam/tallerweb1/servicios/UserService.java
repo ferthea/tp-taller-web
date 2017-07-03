@@ -11,4 +11,5 @@ import java.util.List;
 public interface UserService {
     void agregarRestaurantAUnUsuario(User user, Restaurant restaurant);
     List<Restaurant> obtenerListaDeRestaurantsDeUnUsuario(User user);
+    User obtenerUserPorId(Long id);
 }

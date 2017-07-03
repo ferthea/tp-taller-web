@@ -19,6 +19,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Inject
     RestaurantDao restaurantDao;
 
+    @Inject
+    UserService userService;
+
     @Override
     public List<Restaurant> obtenerListaDeRestaurants() {
         return restaurantDao.obtenerRestaurants();
@@ -46,17 +49,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     public Boolean usuarioEsDuenioDeUnRestaurant(User usuario, Restaurant restaurant){
-        for(Restaurant res : usuario.getListaDeRestaurantes()){
-            if(res.getId() == restaurant.getId()) return true;
-        }
-        return false;
+        return userEsDuenioDeRestaurant(usuario, restaurant.getId());
     }
 
-    public Boolean usuearioEsDuenioDeUnRestaurant(User usuario, Long idRestaurant){
-        for(Restaurant res : usuario.getListaDeRestaurantes()){
-            if(res.getId() == idRestaurant) return true;
-        }
-        return false;
+    public Boolean usuarioEsDuenioDeUnRestaurant(User usuario, Long idRestaurant){
+        return userEsDuenioDeRestaurant(usuario, idRestaurant);
     }
 
     public void actualizarRestaurant(Restaurant restaurant){
@@ -69,5 +66,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     public Menu obtenerMenuPorId(Long id){
         return restaurantDao.obtenerMenuPorId(id);
+    }
+
+    private Boolean userEsDuenioDeRestaurant(User user, Long idRestaurant){
+        List<Restaurant> restaurantList = userService.obtenerListaDeRestaurantsDeUnUsuario(user);
+        for(Restaurant restaurant : restaurantList){
+            if(restaurant.getId() == idRestaurant) return true;
+        }
+        return false;
     }
 }

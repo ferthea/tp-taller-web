@@ -22,4 +22,8 @@ public class UserServiceImpl implements UserService{
     public List<Restaurant> obtenerListaDeRestaurantsDeUnUsuario(User user){
         return userDao.obtenerListaDeRestaurantesPorUsuario(user);
     }
+
+    public User obtenerUserPorId(Long id){
+        return userDao.obtenerUserPorId(id);
+    }
 }

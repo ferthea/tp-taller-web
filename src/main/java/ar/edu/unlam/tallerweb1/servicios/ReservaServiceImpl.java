@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import ar.edu.unlam.tallerweb1.dao.ReservaDao;
+import ar.edu.unlam.tallerweb1.exceptions.NoTableAvailableException;
 import ar.edu.unlam.tallerweb1.modelo.Reserva;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,10 @@ public class ReservaServiceImpl implements ReservaService {
         return 0;
     }
 
-    public void registrarReserva(Reserva reserva){
+    public void registrarReserva(Reserva reserva) throws NoTableAvailableException {
+        if(reserva.getCantidadComensales() > this.obtenerLugaresDisponiblesParaUnHorario(reserva.getRestaurant().getId(), reserva.getFecha())){
+            throw new NoTableAvailableException("No hay lugar disponible");
+        }
         reservaDao.registrarReserva(reserva);
     }
 }

@@ -46,7 +46,6 @@ function agregarOQuitarMenu(restaurant, menu){
     }else{
         lista.val(lista.val()+menu+",");
     }
-
     console.log("Lista: " + lista.val());
 
 }
