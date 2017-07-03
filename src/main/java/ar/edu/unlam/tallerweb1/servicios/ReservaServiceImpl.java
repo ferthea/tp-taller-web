@@ -15,6 +15,8 @@ public class ReservaServiceImpl implements ReservaService {
     @Inject
     private RestaurantService restaurantService;
 
+    @Inject UserService userService;
+
     @Inject
     private ReservaDao reservaDao;
 

@@ -6,21 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoListWrapper {
-    private List<Pedido> pedidosList;
+    private List<PedidoHelper> pedidosList;
 
     public PedidoListWrapper(){
-        this.pedidosList = new ArrayList<Pedido>();
+        this.pedidosList = new ArrayList<PedidoHelper>();
     }
 
-    public List<Pedido> getPedidosList() {
+    public List<PedidoHelper> getPedidosList() {
         return pedidosList;
     }
 
-    public void setPedidosList(List<Pedido> pedidosList) {
+    public void setPedidosList(List<PedidoHelper> pedidosList) {
         this.pedidosList = pedidosList;
     }
 
-    public void agregarPedido(Pedido pedido){
+    public void agregarPedido(PedidoHelper pedido){
         this.pedidosList.add(pedido);
     }
 }

@@ -29,7 +29,8 @@
             </c:if>
 
             <c:if test="${empty error}">
-                <form:form action="confirmar_reserva" method="post" modelAttribute="reserva">
+
+                <!-- <form:form action="confirmar_reserva" method="post" modelAttribute="reserva">
                     <div class="row">
                         <div class="input-field col s12 m6">
                             <span class="grey-text">Dia (mes/dia/año)</span>
@@ -45,15 +46,20 @@
                                 </c:forEach>
                             </form:select>
                         </div>
+                    </div>
 
+                    <div class="row">
+                    </div>
+
+                    <div class="row">
                         <div class="input-field col s12 m offset-m4 top40">
                             <button class="btn waves-effect waves-light light-green darken-1" type="submit" name="submit" id="enviar">Continuar
                                 <i class="material-icons right">send</i>
                             </button>
                         </div>
                     </div>
-                </form:form>
-                <!--<form action="confirmar_reserva.jsp" method="post">
+                </form:form>!-->
+                <form action="confirmar_reserva" method="post">
                     <div class="row">
                         <div class="input-field col s12 m6">
                             <span class="grey-text">Dia (mes/dia/año)</span>
@@ -79,6 +85,13 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="observaciones" name="observaciones" class="materialize-textarea"></textarea>
+                            <label for="observaciones">Observaciones</label>
+                        </div>
+                    </div>
+
                     <div class="top40 row">
                         <div class="input-field col s12 m offset-m4">
                             <button class="btn waves-effect waves-light light-green darken-1" type="submit" name="submit" id="enviar">Continuar
@@ -86,7 +99,7 @@
                             </button>
                         </div>
                     </div>
-                </form>!-->
+                </form>
             </c:if>
 
             <div class="row top40">

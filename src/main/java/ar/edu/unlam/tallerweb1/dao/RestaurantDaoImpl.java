@@ -63,6 +63,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 .getCurrentSession()
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.like("nombre", nombre, MatchMode.ANYWHERE))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
 
@@ -73,6 +74,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 .createCriteria(Restaurant.class)
                 .setProjection(Projections.property("tipo"))
                 .setProjection(Projections.distinct(Projections.property("tipo")))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
 
@@ -82,6 +84,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 .getCurrentSession()
                 .createCriteria(Restaurant.class)
                 .add(Restrictions.eq("tipo", categoria))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
 
@@ -100,6 +103,13 @@ public class RestaurantDaoImpl implements RestaurantDao {
         restaurant.agregarMenu(menu);
 
         session.saveOrUpdate(restaurant);
+    }
+
+    public Menu obtenerMenuPorId(Long id){
+        return (Menu) sessionFactory.getCurrentSession()
+                .createCriteria(Menu.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
     }
 
 }

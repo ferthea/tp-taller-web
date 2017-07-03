@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.dao;
 
 import ar.edu.unlam.tallerweb1.modelo.Reserva;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class ReservaDaoImpl implements ReservaDao{
                 .add(Restrictions.eq("restaurant.id", id))
                 .add(Restrictions.gt("fecha", horaInicio))
                 .add(Restrictions.le("fecha", horaFin))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
 

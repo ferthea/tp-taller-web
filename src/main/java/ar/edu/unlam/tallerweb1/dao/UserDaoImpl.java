@@ -18,19 +18,19 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 
 @Service("userDao")
+@Transactional
 public class UserDaoImpl implements UserDao {
 
 	@Inject
 	private SessionFactory sessionFactory;
 
 	public List<User> getUsers(){
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		List<User> listaDeUsuarios = session.createCriteria(User.class).list();
 		return listaDeUsuarios;
 	}
 
 	@Override
-	@Transactional
 	public void agregarRestaurantAUnUsuario(User user, Restaurant restaurant){
 		Session session = sessionFactory.getCurrentSession();
 		User currentUser = (User) session.createCriteria(User.class)
@@ -42,14 +42,13 @@ public class UserDaoImpl implements UserDao {
 		session.update(currentUser);
 	}
 
-	@Transactional
 	public void registrarUsuario(User usuario){
 		Session session = sessionFactory.getCurrentSession();
 		session.save(usuario);
 	}
 
 	public User consultarUsuario(User user) throws UserNotFoundException{
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		User usuario = (User) session.createCriteria(User.class)
 				.add(Restrictions.eq("email", user.getEmail()))
 				.add(Restrictions.eq("password", user.getPassword()))
@@ -61,7 +60,6 @@ public class UserDaoImpl implements UserDao {
 		return usuario;
 	}
 
-	@Transactional
 	public List<Restaurant> obtenerListaDeRestaurantesPorUsuario(User user){
 		User usuario = (User) sessionFactory.getCurrentSession()
 				.createCriteria(User.class)

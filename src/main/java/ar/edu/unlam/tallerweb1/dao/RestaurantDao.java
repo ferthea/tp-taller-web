@@ -15,4 +15,5 @@ public interface RestaurantDao {
     List<String> obtenerListaDeCategorias();
     void actualizarRestaurant(Restaurant restaurant);
     void agregarMenuAUnRestaurant(Long id, Menu menu);
+    Menu obtenerMenuPorId(Long id);
 }

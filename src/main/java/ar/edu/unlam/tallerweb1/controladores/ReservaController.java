@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import ar.edu.unlam.tallerweb1.modelo.*;
 import ar.edu.unlam.tallerweb1.modelo.validator.ValidatorResult;
+import ar.edu.unlam.tallerweb1.modelo.wrapper.PedidoHelper;
 import ar.edu.unlam.tallerweb1.modelo.wrapper.PedidoListWrapper;
 import ar.edu.unlam.tallerweb1.servicios.ReservaService;
 import ar.edu.unlam.tallerweb1.servicios.RestaurantService;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -50,7 +52,6 @@ public class ReservaController {
             }
         }
 
-
         User user = (User) request.getSession().getAttribute("user");
 
         if(user == null) return new ModelAndView("not_logged_page");
@@ -65,15 +66,21 @@ public class ReservaController {
             Restaurant restaurant = restaurantService.obtenerRestaurantPorId(restaurant_id);
             reserva.setUser(user);
             reserva.setRestaurant(restaurant);
+
             List<Pedido> listaDePedidos = new ArrayList<>();
-            for(Pedido pedido : pedidoListWrapper.getPedidosList()){
+            for(PedidoHelper pedido : pedidoListWrapper.getPedidosList()){
                 if(pedido.getCantidad() > 0){
-                    listaDePedidos.add(pedido);
+                    Pedido pe = new Pedido();
+                    pe.setMenu(restaurantService.obtenerMenuPorId(pedido.getIdmenu()));
+                    pe.setCantidad(pedido.getCantidad());
+                    listaDePedidos.add(pe);
                 }
             }
             reserva.setPedido(listaDePedidos);
 
-            model.put("reserva", reserva);
+            request.getSession().setAttribute("reserva", reserva);
+
+            model.put("reserva", new Reserva());
             model.put("restaurant", restaurant);
             model.put("errores", errores);
         }catch (Exception e){
@@ -81,6 +88,48 @@ public class ReservaController {
             model.put("error", "No se ha encontrado el restaurant solicitado");
         }
         return new ModelAndView("reservar", model);
+    }
+
+    @RequestMapping(path = "/confirmar_reserva", method = RequestMethod.POST)
+    public ModelAndView confirmar_reserva(@RequestParam("cantidad_comensales") Integer cantidad_comensales,
+                                          @RequestParam("observaciones") String observaciones,
+                                          @RequestParam("nueva_fecha") Long fecha,
+                                          RedirectAttributes redir) {
+        ModelMap model = new ModelMap();
+        Double total = 0.0;
+        Reserva reserva = (Reserva) request.getSession().getAttribute("reserva");
+        reserva.setCantidadComensales(cantidad_comensales);
+        reserva.setObservaciones(observaciones);
+        reserva.setFecha(new Date(fecha));
+
+        ValidatorResult resultado =
+                reservaValidator.validarCantidadDeComensales(reserva.getRestaurant().getId(),
+                        fecha, reserva.getCantidadComensales());
+
+        if (!resultado.getResultado()) {
+            redir.addFlashAttribute("errores_redirect", resultado.getErrores());
+            return new ModelAndView("redirect:/reservar?restaurant=" + reserva.getRestaurant().getId());
+        }
+
+        for(Pedido pedido : reserva.getPedidos()){
+            total += pedido.getCantidad() * pedido.getMenu().getPrecio();
+        }
+        request.getSession().setAttribute("reserva", reserva);
+        model.put("reserva", reserva);
+        model.put("total", total);
+        return  new ModelAndView("confirmar_reserva", model);
+
+    }
+
+    @RequestMapping(path = "/crear_reserva", method = RequestMethod.POST)
+    public ModelAndView crear_reserva(){
+        ModelMap model = new ModelMap();
+        Reserva reserva = (Reserva) request.getSession().getAttribute("reserva");
+
+        reservaService.registrarReserva(reserva);
+
+        model.put("reserva", reserva);
+        return new ModelAndView("reserva_exito", model);
     }
 
     /*

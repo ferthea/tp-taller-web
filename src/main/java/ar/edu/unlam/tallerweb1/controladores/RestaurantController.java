@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.modelo.Pedido;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import ar.edu.unlam.tallerweb1.modelo.User;
 import ar.edu.unlam.tallerweb1.modelo.validator.ValidatorResult;
+import ar.edu.unlam.tallerweb1.modelo.wrapper.PedidoHelper;
 import ar.edu.unlam.tallerweb1.modelo.wrapper.PedidoListWrapper;
 import ar.edu.unlam.tallerweb1.servicios.RestaurantService;
 import ar.edu.unlam.tallerweb1.servicios.UserService;
@@ -56,7 +57,8 @@ public class RestaurantController {
             PedidoListWrapper pedidoListWrapper = new PedidoListWrapper();
 
             for(Menu menu : restaurant.getListaDeMenues()){
-                Pedido pe = new Pedido();
+                PedidoHelper pe = new PedidoHelper();
+                pe.setIdmenu(menu.getId());
                 pe.setMenu(menu);
                 pedidoListWrapper.agregarPedido(pe);
             }
@@ -69,7 +71,7 @@ public class RestaurantController {
             model.put("restaurant", restaurant);
             model.put("pedidoListWrapper", pedidoListWrapper);
         }catch(Exception e){
-            System.err.print(e);
+            System.err.print(e.getStackTrace());
             model.put("error", "No se ha encontrado el restaurant solicitado");
         }
         return new ModelAndView("restaurant", model);

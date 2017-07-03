@@ -16,4 +16,5 @@ public interface RestaurantService {
     Boolean usuearioEsDuenioDeUnRestaurant(User usuario, Long idRestaurant);
     void actualizarRestaurant(Restaurant restaurant);
     void agregarMenuAUnRestaurant(Long id, Menu menu);
+    Menu obtenerMenuPorId(Long id);
 }

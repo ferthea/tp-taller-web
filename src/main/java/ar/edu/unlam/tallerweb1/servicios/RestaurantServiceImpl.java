@@ -66,4 +66,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     public void agregarMenuAUnRestaurant(Long id, Menu menu){
         restaurantDao.agregarMenuAUnRestaurant(id, menu);
     }
+
+    public Menu obtenerMenuPorId(Long id){
+        return restaurantDao.obtenerMenuPorId(id);
+    }
 }

@@ -6,7 +6,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -15,15 +14,17 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Restaurant restaurant;
     private Date fecha;
     private Integer cantidadComensales;
+
     @OneToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Pedido> pedidos = new ArrayList<>();
+
     private String observaciones;
 
     public Reserva(){
@@ -54,12 +55,12 @@ public class Reserva {
         this.restaurant = restaurant;
     }
 
-    public Date setFecha(){
-        return this.fecha;
+    public void setFecha(Date fecha){
+        this.fecha = fecha;
     }
 
-    public void getFecha(Date fecha){
-        this.fecha = fecha;
+    public Date getFecha(){
+        return this.fecha;
     }
 
     public Integer getCantidadComensales() {
