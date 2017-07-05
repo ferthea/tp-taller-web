@@ -13,14 +13,12 @@
 				<c:if test="${sessionScope.user != null}">
 					<li><a class="dropdown-button" href="#!" data-beloworigin="true" data-activates="usermenu">${sessionScope.user.getNombre()}<i class="material-icons right">arrow_drop_down</i></a></li>
 					<ul id="usermenu" class="dropdown-content">
-						<c:if test="${sessionScope.user.getTipo() == 'cliente'}">
-							<li><a href="/misreservas">Reservas</a></li>
-							<li class="divider"></li>
-						</c:if>
+						<li><a href="/misreservas">Reservas</a></li>
 						<c:if test="${sessionScope.user.getTipo() == 'restaurant'}">
 							<li><a href="/misrestaurantes">Mis restaurantes</a></li>
 							<li class="divider"></li>
 						</c:if>
+						<li class="divider"></li>
 						<li><a href="/logout">Salir</a></li>
 					</ul>
 				</c:if>

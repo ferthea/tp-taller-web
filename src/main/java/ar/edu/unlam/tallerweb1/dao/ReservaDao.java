@@ -9,4 +9,8 @@ import java.util.List;
 public interface ReservaDao {
     List<Reserva> obtenerReservasDeUnRestaurantParaUnaFecha(Long id, Date fecha);
     void registrarReserva(Reserva reserva);
+    List<Reserva> obtenerReservasDeUnUserPaginadas(Long id, Integer page);
+    List<Reserva> obtenerReservasDeUnRestaurantPaginadas(Long id, Integer page);
+    Long obtenerCantidadDeRerservasDeUnUser(Long id);
+    Long obtenerCantidadDeRerservasDeUnRestaurant(Long id);
 }

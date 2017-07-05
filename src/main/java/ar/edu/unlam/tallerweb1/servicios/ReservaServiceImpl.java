@@ -16,8 +16,6 @@ public class ReservaServiceImpl implements ReservaService {
     @Inject
     private RestaurantService restaurantService;
 
-    @Inject UserService userService;
-
     @Inject
     private ReservaDao reservaDao;
 
@@ -44,4 +42,21 @@ public class ReservaServiceImpl implements ReservaService {
         }
         reservaDao.registrarReserva(reserva);
     }
+
+    public List<Reserva> obtenerReservasDeUnUserPaginadas(Long id, Integer page){
+        return reservaDao.obtenerReservasDeUnUserPaginadas(id, page);
+    }
+
+    public List<Reserva> obtenerReservasDeUnRestaurantPaginadas(Long id, Integer page){
+        return reservaDao.obtenerReservasDeUnRestaurantPaginadas(id, page);
+    }
+
+    public Long obtenerCantidadDeRerservasDeUnUser(Long id){
+        return reservaDao.obtenerCantidadDeRerservasDeUnUser(id);
+    }
+
+    public Long obtenerCantidadDeReservasDeUnRestaurant(Long id){
+        return reservaDao.obtenerCantidadDeRerservasDeUnRestaurant(id);
+    }
+
 }
