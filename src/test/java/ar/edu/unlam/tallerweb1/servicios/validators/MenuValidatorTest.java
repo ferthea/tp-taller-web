@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 
 public class MenuValidatorTest {
 
-
     MenuValidator menuValidator = new MenuValidatorImpl();
 
     @Test

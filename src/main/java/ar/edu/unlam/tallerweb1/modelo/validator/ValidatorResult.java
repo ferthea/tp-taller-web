@@ -9,7 +9,8 @@ public class ValidatorResult {
     private List<String> errores = new ArrayList<>();
 
     public Boolean getResultado(){
-        return this.resultado;
+        if(this.errores.size() > 0) return false;
+        return true;
     }
 
     public void setResultado(Boolean resultado){

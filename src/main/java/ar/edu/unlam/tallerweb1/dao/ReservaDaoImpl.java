@@ -1,7 +1,9 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import ar.edu.unlam.tallerweb1.modelo.Pedido;
 import ar.edu.unlam.tallerweb1.modelo.Reserva;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -80,5 +82,19 @@ public class ReservaDaoImpl implements ReservaDao{
                 .add(Restrictions.eq("user.id", id))
                 .setProjection(Projections.rowCount())
                 .uniqueResult();
+    }
+
+    public Reserva obtenerReservaPorId(Long id){
+        return (Reserva) sessionFactory.getCurrentSession()
+                .createCriteria(Reserva.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
+
+    }
+
+    public void eliminarReserva(Long id){
+        Session session = sessionFactory.getCurrentSession();
+        Reserva reserva = this.obtenerReservaPorId(id);
+        session.delete(reserva);
     }
 }

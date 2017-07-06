@@ -17,7 +17,7 @@ public class ReservaServiceImpl implements ReservaService {
     private RestaurantService restaurantService;
 
     @Inject
-    private ReservaDao reservaDao;
+    public ReservaDao reservaDao;
 
     public Integer obtenerLugaresDisponiblesParaUnHorario(Long idRestaurant, Date horario){
         Integer total = 0;
@@ -57,6 +57,20 @@ public class ReservaServiceImpl implements ReservaService {
 
     public Long obtenerCantidadDeReservasDeUnRestaurant(Long id){
         return reservaDao.obtenerCantidadDeRerservasDeUnRestaurant(id);
+    }
+
+    public Reserva obtenerReservaPorId(Long id){
+        return reservaDao.obtenerReservaPorId(id);
+    }
+
+    public Boolean userEsDuenioDeUnaReserva(Long idUser, Long idReserva){
+        Reserva reserva = reservaDao.obtenerReservaPorId(idReserva);
+        if(reserva.getUser().getId() != idUser) return false;
+        return true;
+    }
+
+    public void eliminarReserva(Long id){
+        reservaDao.eliminarReserva(id);
     }
 
 }

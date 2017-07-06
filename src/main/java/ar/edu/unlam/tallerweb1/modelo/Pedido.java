@@ -1,6 +1,10 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 public class Pedido {
@@ -8,7 +12,7 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = javax.persistence.CascadeType.ALL)
     private Menu menu;
     private Integer cantidad = 0;
 

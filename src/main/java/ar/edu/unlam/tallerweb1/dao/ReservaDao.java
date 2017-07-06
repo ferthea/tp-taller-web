@@ -13,4 +13,6 @@ public interface ReservaDao {
     List<Reserva> obtenerReservasDeUnRestaurantPaginadas(Long id, Integer page);
     Long obtenerCantidadDeRerservasDeUnUser(Long id);
     Long obtenerCantidadDeRerservasDeUnRestaurant(Long id);
+    Reserva obtenerReservaPorId(Long id);
+    void eliminarReserva(Long id);
 }

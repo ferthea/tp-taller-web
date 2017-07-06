@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-import ar.edu.unlam.tallerweb1.dao.UserDao;
 import ar.edu.unlam.tallerweb1.dao.UserDaoImpl;
 import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
 import ar.edu.unlam.tallerweb1.modelo.User;
@@ -9,11 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 

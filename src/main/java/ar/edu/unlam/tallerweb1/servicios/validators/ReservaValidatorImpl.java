@@ -1,10 +1,14 @@
 package ar.edu.unlam.tallerweb1.servicios.validators;
 
+import ar.edu.unlam.tallerweb1.modelo.Reserva;
+import ar.edu.unlam.tallerweb1.modelo.User;
 import ar.edu.unlam.tallerweb1.modelo.validator.ValidatorResult;
 import ar.edu.unlam.tallerweb1.servicios.ReservaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service("reservaValidator")
@@ -12,6 +16,9 @@ public class ReservaValidatorImpl implements ReservaValidator {
 
     @Inject
     private ReservaService reservaService;
+
+    @Autowired
+    private HttpServletRequest request;
 
     public ValidatorResult validarCantidadDeComensales(Long restaurant_id, Long fecha, Integer cantidad){
         ValidatorResult resultado = new ValidatorResult();
@@ -26,10 +33,26 @@ public class ReservaValidatorImpl implements ReservaValidator {
             resultado.agregarError("No hay lugares disponibles para esa hora. (Disponibles: " + lugares_disponibles + " - Cantidad seleccionada: " + cantidad + ")");
         }
 
-        if(resultado.getErrores().size() == 0){
-            resultado.setResultado(true);
-        }
+        return resultado;
+    }
+
+    public ValidatorResult validarReserva(Long id){
+        ValidatorResult resultado = new ValidatorResult();
+        User user = (User) request.getSession().getAttribute("user");
+        Reserva reserva = reservaService.obtenerReservaPorId(id);
+
+        if(user == null)
+            resultado.agregarError("Debes estar logueado para realizar esta accion");
+
+
+        if(reserva == null)
+            resultado.agregarError("No se ha encontrado el restaurant solicitado");
+
+
+        if(!reservaService.userEsDuenioDeUnaReserva(user.getId(), id))
+            resultado.agregarError("No puedes realizar esta accion. No eres el creador de la reserva");
 
         return resultado;
+
     }
 }

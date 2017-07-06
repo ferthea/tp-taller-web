@@ -3,6 +3,7 @@
          pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="now" class="java.util.Date"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,7 +32,7 @@
                                 <span style="vertical-align: super">${reserva.cantidadComensales}</span>
                             </div>
                             <div class="col m4 right-align">
-                                <i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="">date_range</i>
+                                <i class="material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="fecha">date_range</i>
                                 <span style="vertical-align: super"><fmt:formatDate value="${reserva.getFecha()}" pattern="yyyy-MM-dd HH:mm"/></span>
                             </div>
 
@@ -60,8 +61,34 @@
                                 $ ${total}
                             </div>
                         </div>
+                        <c:if test="${user.getTipo().equals('cliente') and reserva.fecha > now}">
+                            <div class="row" style="margin-bottom: 0px; margin-left: 0px;">
+                                <a href="#modal_borrar" data-reserva="${reserva.id}" class="waves-effect waves-light btn red darken-4 link_borrar">
+                                    <i class="material-icons right">close</i>Cancelar
+                                </a>
+                            </div>
+                        </c:if>
+                        <c:if test="${user.getTipo().equals('cliente') and reserva.fecha < now}">
+                            <div class="row" style="margin-bottom: 0px; margin-left: 0px;">
+                                <a href="#" class="waves-effect waves-light btn green lighten-2">
+                                    <i class="material-icons right">done</i>Finalizada
+                                </a>
+                            </div>
+                        </c:if>
                     </div>
                 </c:forEach>
+
+                <c:if test="${user.getTipo().equals('cliente')}">
+                    <div id="modal_borrar" class="modal">
+                        <div class="modal-content">
+                            <h4>Estas seguro?</h4>
+                            <p>Si aceptas no lo podrás deshacer.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="modal_confirm" class="modal-action modal-close waves-effect waves-green btn-flat">Estoy seguro</a>
+                        </div>
+                    </div>
+                </c:if>
 
                 <div class="row center-align" style="margin-top: 30px;">
                     <ul class="pagination">
@@ -86,6 +113,17 @@
 <script>
 
     $(document).ready(function(){
+        $('.modal').modal();
+        let modal = $("#modal_confirm");
+
+        if(modal){
+            let btn_borrar = $(".link_borrar");
+            $(btn_borrar).click(function(e){
+                let id_reserva = $(this).data("reserva");
+                $("#modal_confirm").attr("href", "/cancelar_reserva?reserva=" + id_reserva);
+            })
+        }
+
         if(getUrlParameter("restaurant")){
             $("ul.pagination > li > a").each(function(e){
                 var original_value = $(this).attr("href");
@@ -94,7 +132,6 @@
             })
 
         }
-        console.log(getUrlParameter("restaurant"));
     });
 
     var getUrlParameter = function getUrlParameter(sParam) {

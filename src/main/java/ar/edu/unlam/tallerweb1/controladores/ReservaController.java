@@ -143,4 +143,16 @@ public class ReservaController {
         return new ModelAndView("reserva_exito", model);
     }
 
+    @RequestMapping(path = "/cancelar_reserva", method = RequestMethod.GET)
+    public ModelAndView cancelar_reserva(@RequestParam("reserva") Long id){
+        ValidatorResult resultado = reservaValidator.validarReserva(id);
+        if(!resultado.getResultado()){
+            ModelMap model = new ModelMap();
+            model.put("errores", resultado.getErrores());
+            return new ModelAndView("error_page", model);
+        }
+        reservaService.eliminarReserva(id);
+        return new ModelAndView("redirect:/misreservas");
+    }
+
 }

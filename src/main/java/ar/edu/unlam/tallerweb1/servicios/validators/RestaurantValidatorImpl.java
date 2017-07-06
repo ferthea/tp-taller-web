@@ -46,7 +46,6 @@ public class RestaurantValidatorImpl implements RestaurantValidator {
             resultado.agregarError("Solamente se aceptan fotos con extencón .jpg, .jpeg o .png");
         }
 
-        if(resultado.getErrores().size() == 0) resultado.setResultado(true);
         return resultado;
     }
 }
