@@ -5,6 +5,10 @@ body {
     background: #ececec;
 }
 
+main {
+    flex: 1 0 auto;
+}
+
 #container {
     flex: 1 0 auto;
 }

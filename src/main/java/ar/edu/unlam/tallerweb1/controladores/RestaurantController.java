@@ -175,7 +175,7 @@ public class RestaurantController {
     public ModelAndView editarRestaurante(@ModelAttribute("restaurant") Restaurant restaurant,
                                           @RequestParam("id") Long id,
                                           @RequestParam("foto_restaurant") MultipartFile foto){
-
+        ModelMap model = new ModelMap();
         User user = (User) request.getSession().getAttribute("user");
         if(user == null || !restaurantService.usuarioEsDuenioDeUnRestaurant(user, id)){
             return new ModelAndView("redirect:/index");
@@ -191,7 +191,6 @@ public class RestaurantController {
                 foto.transferTo(nuevaFoto);
             }catch(Exception e){
                 System.err.print(e.getStackTrace());
-                ModelMap model = new ModelMap();
                 model.put("error", "Ha ocurrido un error procesando la foto");
                 return new ModelAndView("error_page", model);
             }
@@ -200,7 +199,8 @@ public class RestaurantController {
             restaurantService.actualizarRestaurant(restaurant);
             return new ModelAndView("redirect:/misrestaurantes");
         }
-        return new ModelAndView("index");
+        model.put("errores", resultado.getErrores());
+        return new ModelAndView("error_page", model);
     }
 
     @RequestMapping(value = "/agregar_menu", method = RequestMethod.GET)

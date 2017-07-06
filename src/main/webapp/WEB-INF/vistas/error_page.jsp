@@ -11,23 +11,26 @@
 </head>
 <body>
 <jsp:include page="_Header.jsp" />
-<div class="container">
-    <div class="row">
-        <div class="col s12 m8 offset-m2">
-            <div class="row">
-                <c:if test="${not empty errores}">
-                    <div>
-                        <h3 class="red-text text-darken-4 center-align">ERROR</h3>
-                        <div class="row">
-                            <c:forEach items="${errores}" var="error">
-                                <div><h5><c:out value="${error}"/></h5></div>
-                            </c:forEach>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m8 offset-m2">
+                <div class="row">
+                    <c:if test="${not empty errores}">
+                        <div>
+                            <h3 class="red-text text-darken-4 center-align">ERROR</h3>
+                            <div class="row">
+                                <c:forEach items="${errores}" var="error">
+                                    <div><h5><c:out value="${error}"/></h5></div>
+                                </c:forEach>
+                            </div>
                         </div>
-                    </div>
-                </c:if>
+                    </c:if>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</main>
+<jsp:include page="_Footer.jsp" />
 </body>
 </html>
