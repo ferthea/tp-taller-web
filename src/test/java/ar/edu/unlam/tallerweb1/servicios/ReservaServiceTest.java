@@ -59,7 +59,7 @@ public class ReservaServiceTest {
 
         try{
             reservaService.registrarReserva(reserva);
-            verify(reservaDao, times(2)).registrarReserva(reserva);
+            verify(reservaDao, times(1)).registrarReserva(reserva);
         }catch (NoTableAvailableException e){
             fail("no debería haber fallado");
         }
