@@ -72,13 +72,15 @@
               <c:forEach items="${pedido.getMenu().getIngredientes()}" var="ingrediente">
                 <div class="chip">${ingrediente}</div>
               </c:forEach>
-              <div class="right">
-                <form:hidden path="pedidosList[${i.index}].idmenu" />
-                <form:input path="pedidosList[${i.index}].cantidad" type="number"/>
-              </div>
-              <div class="right" style="margin-right: 20px; padding-top: 10px;">
-                <span>Cantidad</span>
-              </div>
+              <c:if test="${user.getTipo().equals('cliente')}">
+                <div class="right">
+                  <form:hidden path="pedidosList[${i.index}].idmenu" />
+                  <form:input path="pedidosList[${i.index}].cantidad" type="number"/>
+                </div>
+                <div class="right" style="margin-right: 20px; padding-top: 10px;">
+                  <span>Cantidad</span>
+                </div>
+              </c:if>
             </div>
           </div>
         </c:forEach>

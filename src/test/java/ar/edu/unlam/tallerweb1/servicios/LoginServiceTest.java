@@ -5,15 +5,12 @@ import ar.edu.unlam.tallerweb1.exceptions.UserNotFoundException;
 import ar.edu.unlam.tallerweb1.modelo.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-@RunWith(MockitoJUnitRunner.class)
 public class LoginServiceTest {
 
     @InjectMocks

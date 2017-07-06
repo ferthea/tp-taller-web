@@ -32,6 +32,8 @@ public class UserValidatorImpl implements UserValidator {
 
         if(user.getTipo() == null) result.agregarError("Seleccione un tipo de usuario");
 
+        if(result.getErrores().size() == 0) result.setResultado(true);
+
         return result;
     }
 }

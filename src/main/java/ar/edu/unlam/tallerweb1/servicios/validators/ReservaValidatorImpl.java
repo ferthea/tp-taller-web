@@ -33,6 +33,8 @@ public class ReservaValidatorImpl implements ReservaValidator {
             resultado.agregarError("No hay lugares disponibles para esa hora. (Disponibles: " + lugares_disponibles + " - Cantidad seleccionada: " + cantidad + ")");
         }
 
+        if(resultado.getErrores().size() == 0) resultado.setResultado(true);
+
         return resultado;
     }
 
@@ -51,6 +53,8 @@ public class ReservaValidatorImpl implements ReservaValidator {
 
         if(!reservaService.userEsDuenioDeUnaReserva(user.getId(), id))
             resultado.agregarError("No puedes realizar esta accion. No eres el creador de la reserva");
+
+        if(resultado.getErrores().size() == 0) resultado.setResultado(true);
 
         return resultado;
 

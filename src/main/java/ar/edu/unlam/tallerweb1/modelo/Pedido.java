@@ -12,7 +12,8 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne
+    @Cascade(CascadeType.PERSIST)
     private Menu menu;
     private Integer cantidad = 0;
 

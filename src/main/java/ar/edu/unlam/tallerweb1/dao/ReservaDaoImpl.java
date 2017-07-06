@@ -95,6 +95,6 @@ public class ReservaDaoImpl implements ReservaDao{
     public void eliminarReserva(Long id){
         Session session = sessionFactory.getCurrentSession();
         Reserva reserva = this.obtenerReservaPorId(id);
-        session.delete(reserva);
+        session.delete(session.get(Reserva.class, id));
     }
 }

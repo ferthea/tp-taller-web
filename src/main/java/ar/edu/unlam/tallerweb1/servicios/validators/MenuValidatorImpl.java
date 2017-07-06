@@ -17,6 +17,8 @@ public class MenuValidatorImpl implements MenuValidator {
             resultado.agregarError("Ingrese un precio valido");
         }
 
+        if(resultado.getErrores().size() == 0) resultado.setResultado(true);
+
         return resultado;
     }
 }

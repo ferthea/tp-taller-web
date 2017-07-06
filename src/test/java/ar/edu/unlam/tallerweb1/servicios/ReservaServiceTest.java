@@ -1,19 +1,14 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import ar.edu.unlam.tallerweb1.dao.ReservaDao;
-import ar.edu.unlam.tallerweb1.dao.ReservaDaoImpl;
-import ar.edu.unlam.tallerweb1.dao.UserDao;
-import ar.edu.unlam.tallerweb1.dao.UserDaoImpl;
 import ar.edu.unlam.tallerweb1.exceptions.NoTableAvailableException;
 import ar.edu.unlam.tallerweb1.modelo.Reserva;
 import ar.edu.unlam.tallerweb1.modelo.Restaurant;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 import java.util.Date;
 
